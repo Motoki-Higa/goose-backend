@@ -6,9 +6,14 @@ const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
     const credentials = auth(req);
 
     // If the user's credentials are available...
-    // Attempt to retrieve the user from the data store
-    // by their username (i.e. the user's "key"
-    // from the Authorization header).
+    if (credentials){
+        // Attempt to retrieve the user from the data store
+        // by their username (i.e. the user's "key"
+        // from the Authorization header).
+        const user = users.find(u => u.username === credentials.name);
+    }
+    
+
 
     // If a user was successfully retrieved from the data store...
     // Use the bcryptjs npm package to compare the user's password

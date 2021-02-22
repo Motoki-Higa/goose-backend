@@ -1,9 +1,33 @@
 import createError from 'http-errors';
 import express, { Request, Response, NextFunction } from 'express';
-import path from 'path';
+import path, { resolve } from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import cors from 'cors';
+import 'dotenv/config';
 
+import { default as mongodb } from 'mongodb';
+let MongoClient = mongodb.MongoClient;
+
+// ================ mongoDB atlas config ==================
+// Add this code to solve TS error
+if (!process.env.DB_CONNECTION) {
+  process.exit(1);
+}
+
+// Connection URL
+const uri = process.env.DB_CONNECTION;
+// Database Name
+const dbName = process.env.DB_NAME;
+
+MongoClient.connect(uri, { useUnifiedTopology: true }, async (err, client) => {
+  const db = client.db(dbName);
+  // store db in app.locals gloablly
+  app.locals.db = db;
+});
+// =========================================================
+
+// import routes
 import apiUsers from './api/users';
 
 var app = express();
@@ -18,6 +42,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 
 // define routes
 app.use('/api', apiUsers);
