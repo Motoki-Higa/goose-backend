@@ -1,4 +1,5 @@
-const { check, validationResult } = require('express-validator');
+import { check, validationResult } from 'express-validator';
+import { Request, Response, NextFunction } from 'express';
 
 // validate the signup input field with express-validator
 const signUpValidator = [
@@ -14,12 +15,12 @@ const signUpValidator = [
   check('password')
     .exists({ checkNull: true, checkFalsy: true })
     .withMessage('Please provide a value for "password"'),
-  (req, res, next) => {
+  (req: Request, res: Response, next: NextFunction) => {
     // extract error msg if any from nameValidator
     const errors = validationResult(req);
 
     if(!errors.isEmpty()){
-      const errorMessages = errors.array().map(error => error.msg);
+      const errorMessages = errors.array().map((error: any) => error.msg);
   
       return res.status(400).json({errors: errorMessages});
     }
@@ -28,4 +29,4 @@ const signUpValidator = [
   }
 ]
 
-module.exports = signUpValidator;
+export default signUpValidator;
