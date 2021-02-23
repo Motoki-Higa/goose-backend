@@ -12,23 +12,22 @@ let MongoClient = mongodb.MongoClient;
 // ================ mongoDB atlas config ==================
 // Add this code to solve TS error
 if (!process.env.DB_CONNECTION) {
-  process.exit(1);
+    process.exit(1);
 }
 
-// Connection URL
+// Connection URL & Database Name
 const uri = process.env.DB_CONNECTION;
-// Database Name
 const dbName = process.env.DB_NAME;
 
 MongoClient.connect(uri, { useUnifiedTopology: true }, async (err, client) => {
-  const db = client.db(dbName);
-  // store db in app.locals gloablly
-  app.locals.db = db;
+    const db = client.db(dbName);
+    // store db in app.locals gloablly
+    app.locals.db = db;
 });
 // =========================================================
 
 // import routes
-import apiUsers from './api/users';
+import apiUsers from './api';
 
 var app = express();
 
@@ -49,18 +48,18 @@ app.use('/api', apiUsers);
 
 // catch 404 and forward to error handler
 app.use((req: Request, res: Response, next: NextFunction) => {
-  next(createError(404));
+    next(createError(404));
 });
 
 // error handler
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 export default app;

@@ -1,10 +1,12 @@
+import { Context } from "vm";
+
 declare global {
-  namespace NodeJS {
-    interface ProcessEnv {
-      DB_CONNECTION: string;
-      DB_NAME: string;
+    namespace NodeJS {
+        interface ProcessEnv {
+            DB_CONNECTION: string;
+            DB_NAME: string;
+        }
     }
-  }
 }
 
 // If this file has no import/export statements (i.e. is a script)
