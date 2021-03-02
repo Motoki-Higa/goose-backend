@@ -8,8 +8,8 @@ import signUpValidator from '../middlewares/signUpValidator';
 import authenticateUser from '../middlewares/authenticateUser';
 
 // services
-import userSignUp from '../services/userSignUp';
-import userSignIn from '../services/userSignIn';
+import userSignUp from '../controllers/userSignUp';
+import userSignIn from '../controllers/userSignIn';
 
 // This array is used to keep track of user records as they created for now. (will be replaced with DB later)
 const users = [];

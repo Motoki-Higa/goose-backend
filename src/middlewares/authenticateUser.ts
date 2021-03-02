@@ -20,15 +20,15 @@ const authenticateUser = async (req: Request, res: Response, next: NextFunction)
             const authenticated = bcryptjs.compareSync(credentials.pass, user.password);
 
             if (authenticated) {
-                console.log(`Authentication successful for username: ${user.username}`);
+                console.log(`Authentication successful for email: ${user.email}`);
         
                 // Store the user on the Request object.
                 req.currentUser = user;
             } else {
-                message = `Authentication failure for username: ${user.username}`;
+                message = `Authentication failure for email: ${user.email}`;
             }
         } else {
-            message = `User not found for username: ${credentials.name}`;
+            message = `User not found for email: ${credentials.name}`;
         }
     } else {
         message = 'Auth header not found';
