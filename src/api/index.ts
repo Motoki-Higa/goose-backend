@@ -1,11 +1,12 @@
 import { Request, Response, NextFunction, Router } from 'express';
 var router = Router();
+import { ObjectID } from 'mongodb';
+import aws from 'aws-sdk';
 
-// validators
+// middlewares & validators
 import signUpValidator from '../middlewares/signUpValidator';
-
-// middlewares
 import authenticateUser from '../middlewares/authenticateUser';
+import upload from '../middlewares/imageUpload';
 
 // services
 import userSignUp from '../controllers/userSignUp';
@@ -40,5 +41,14 @@ router.get('/users', authenticateUser, userSignIn);
 
 // Sign Up : Route that create a new user
 router.post('/users', signUpValidator, userSignUp);
+
+// mybike POST
+router.post('/mybikes', upload.single('image'), async ( req, res, next) => {
+    try {
+        await console.log(`POST is made with: ${JSON.stringify(req.body)}`)
+    } catch(err) {
+        console.log(err)
+    }
+})
 
 export default router;

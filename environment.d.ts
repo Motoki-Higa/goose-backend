@@ -5,6 +5,9 @@ declare global {
         interface ProcessEnv {
             DB_CONNECTION: string;
             DB_NAME: string;
+            S3_ACCESS_KEY: string;
+            S3_ACCESS_SECRET: string;
+            S3_BUCKET: string;
         }
     }
 }
