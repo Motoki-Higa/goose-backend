@@ -43,9 +43,30 @@ router.get('/users', authenticateUser, userSignIn);
 router.post('/users', signUpValidator, userSignUp);
 
 // mybike POST
-router.post('/mybikes', upload.single('image'), async ( req, res, next) => {
+router.post('/mybikes', upload.array('image', 10), async ( req, res, next) => {
     try {
-        await console.log(`POST is made with: ${JSON.stringify(req.body)}`)
+        // 1. get info of images which are stored in aws s3
+        // 2. get only 'key' and 'location' from each file object
+        // * (images as any) solves the issue of gettting 'expression is not callable' on map()
+        const images = req.files;
+        const imagesData = (images as any).map( (image: any) => {
+            return {'key': image.key, 'location': image.location};
+        })
+
+        const bikeObj = {
+            user_id: req.app.locals.currentUser._id,
+            name: req.body.name,
+            brand: req.body.brand,
+            builtby: req.body.builtby,
+            desc: req.body.desc,
+            images: imagesData
+        }
+
+        // store values in db
+        const collection = req.app.locals.db.collection('bikes');
+        const result = await collection.insertOne(bikeObj);
+        console.log(`${result.insertedCount} documents were inserted with the _id: ${result.insertedId}`);
+        
     } catch(err) {
         console.log(err)
     }

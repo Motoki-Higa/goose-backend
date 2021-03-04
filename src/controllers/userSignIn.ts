@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 
 const userSignIn = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const user = req.currentUser;
+        const user = req.app.locals.currentUser;
   
         res.json({
             name: user.name,
