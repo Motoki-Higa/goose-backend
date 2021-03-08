@@ -29,7 +29,7 @@ const postBike = async (req: Request, res: Response, next: NextFunction ) => {
             console.log(`${result.insertedCount} documents were inserted with the _id: ${result.insertedId}`);
         }
 
-        res.redirect('back');
+        res.json(bikeObj);
         
     } catch(err) {
         console.log(err)
