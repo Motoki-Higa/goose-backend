@@ -12,7 +12,8 @@ import upload from '../middlewares/imageUpload';
 import userSignUp from '../controllers/userSignUp';
 import userSignIn from '../controllers/userSignIn';
 import postBike from '../controllers/postBike';
-import getMytBike from '../controllers/getMyBike';
+import getAllMyBikes from '../controllers/getAllMyBikes';
+import getMyBike from '../controllers/getMyBike';
 
 // This array is used to keep track of user records as they created for now. (will be replaced with DB later)
 const users = [];
@@ -44,11 +45,13 @@ router.get('/users', authenticateUser, userSignIn);
 // Sign Up : Route that create a new user
 router.post('/users', signUpValidator, userSignUp);
 
-// mybike GET
-router.get('/mybikes', getMytBike);
+// mybikes GET
+router.get('/mybikes', getAllMyBikes);
 
-// mybike POST
+// mybikes POST
 router.post('/mybikes', upload.array('image', 10), postBike);
 
+// mybikes/:id GET
+router.get('/mybikes/:id', getMyBike)
 
 export default router;
