@@ -15,6 +15,7 @@ import postBike from '../controllers/postBike';
 import getAllMyBikes from '../controllers/getAllMyBikes';
 import getMyBike from '../controllers/getMyBike';
 import deleteMyBike from '../controllers/deleteMyBike';
+import deleteSingleBikeImage from '../controllers/deleteSingleBikeImage';
 
 // This array is used to keep track of user records as they created for now. (will be replaced with DB later)
 const users = [];
@@ -55,7 +56,10 @@ router.post('/mybikes', upload.array('image', 10), postBike);
 // mybikes/:id GET
 router.get('/mybikes/:id', getMyBike)
 
-// mybikes/:id delete
+// mybikes/:id DELETE
 router.delete('/mybikes/:id', deleteMyBike)
+
+// mybikes/edit/:id DELETE
+router.post('/mybikes/edit/:id', deleteSingleBikeImage)
 
 export default router;
