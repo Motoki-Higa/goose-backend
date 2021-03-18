@@ -5,7 +5,6 @@ const { ObjectID } = require('mongodb');
 
 const deleteSingleBikeImage = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const currentUserId = req.app.locals.currentUser._id;
         const bikeId = req.params.id;
         const imageKey = req.body.key;
         const collection = req.app.locals.db.collection('bikes');
