@@ -33,7 +33,7 @@ const updateSingleBike = async (req: Request, res: Response, next: NextFunction 
 
         console.log(`${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,);
 
-        res.send({message: 'Success!'});
+        res.send({message: req.body.name + ' is updated!'});
         
     } catch(err) {
         console.log(err)

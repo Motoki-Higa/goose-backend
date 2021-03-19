@@ -29,7 +29,7 @@ const postBike = async (req: Request, res: Response, next: NextFunction ) => {
             console.log(`${result.insertedCount} documents were inserted with the _id: ${result.insertedId}`);
         }
 
-        res.json(bikeObj);
+        res.send({message: req.body.name + ' is added successfully!'});
         
     } catch(err) {
         console.log(err)

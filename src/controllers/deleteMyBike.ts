@@ -39,7 +39,7 @@ const deleteMyBike = async (req: Request, res: Response, next: NextFunction) => 
 
         console.log(`${itemToDelete.deletedCount} item was deleted`,);
 
-        res.send({ message: 'Success' });
+        res.send({ message: 'Item is deleted successfully!' });
     } catch(err) {
         console.log(err);
     }

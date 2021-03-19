@@ -39,7 +39,7 @@ const deleteSingleBikeImage = async (req: Request, res: Response, next: NextFunc
 
 
         console.log( `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`);
-        res.send({ message: 'Success' });
+        res.send({ message: 'Image deleted successfully!' });
     } catch(err) {
         console.log(err);
     }
