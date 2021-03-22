@@ -3,11 +3,11 @@ import aws, { AWSError } from 'aws-sdk';
 const { ObjectID } = require('mongodb');
 
 
-const deleteSingleBikeImage = async (req: Request, res: Response, next: NextFunction) => {
+const deleteSingleItemImage = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const bikeId = req.params.id;
         const imageKey = req.body.key;
-        const collection = req.app.locals.db.collection('bikes');
+        const collection = req.app.locals.db.collection('items');
 
 
         // ======== Take care of deleting an image from database =========
@@ -28,7 +28,7 @@ const deleteSingleBikeImage = async (req: Request, res: Response, next: NextFunc
             accessKeyId: process.env.S3_ACCESS_KEY,
         });
         const params: any = { 
-            Bucket: process.env.S3_BUCKET, 
+            Bucket: process.env.S3_BUCKET_GOOSE_ITEMS, 
             'Key': imageKey
         };
         s3.deleteObject(params, (err: AWSError, data: any) => {
@@ -45,4 +45,4 @@ const deleteSingleBikeImage = async (req: Request, res: Response, next: NextFunc
     }
 }
 
-export default deleteSingleBikeImage;
+export default deleteSingleItemImage;

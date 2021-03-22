@@ -26,7 +26,7 @@ const deleteMyBike = async (req: Request, res: Response, next: NextFunction) => 
         });
 
         const params: any = { 
-            Bucket: process.env.S3_BUCKET, 
+            Bucket: process.env.S3_BUCKET_GOOSE_BIKES, 
             Delete: {
                 Objects: imageKeys
             }

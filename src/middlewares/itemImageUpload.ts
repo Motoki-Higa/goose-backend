@@ -20,7 +20,7 @@ const fileFilter = (req: any, file: any, cb: any) => {
 // Create a multer storage config object with multer-s3
 const multerS3Config = multerS3({
     s3: s3Config,
-    bucket: `${process.env.S3_BUCKET}`, // with object literal, you can prevent typescript error
+    bucket: `${process.env.S3_BUCKET_GOOSE_ITEMS}`, // with object literal, you can prevent typescript error
     // metadata for putting field name
     metadata: function (req, file, cb) {
         cb(null, { fieldName: file.fieldname });
@@ -34,7 +34,7 @@ const multerS3Config = multerS3({
 });
 
 // Create multer function for upload
-const upload = multer({
+const itemImageUpload = multer({
     storage: multerS3Config,
     fileFilter: fileFilter,
     limits: {
@@ -42,4 +42,4 @@ const upload = multer({
     }
 })
 
-export default upload;
+export default itemImageUpload;

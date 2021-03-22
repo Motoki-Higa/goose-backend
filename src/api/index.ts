@@ -6,17 +6,26 @@ import aws from 'aws-sdk';
 // middlewares & validators
 import signUpValidator from '../middlewares/userSignUp.validator';
 import authenticateUser from '../middlewares/userSignIn.authenticate';
-import upload from '../middlewares/imageUpload';
+import bikeImageUpload from '../middlewares/bikeImageUpload';
+import itemImageUpload from '../middlewares/itemImageUpload';
 
 // controllers
 import userSignUp from '../controllers/userSignUp';
 import userSignIn from '../controllers/userSignIn';
-import postBike from '../controllers/postBike';
-import getAllMyBikes from '../controllers/getAllMyBikes';
-import getMyBike from '../controllers/getMyBike';
-import deleteMyBike from '../controllers/deleteMyBike';
-import updateSingleBike from '../controllers/updateSingleBike';
-import deleteSingleBikeImage from '../controllers/deleteSingleBikeImage';
+
+import postBike from '../controllers/myBikes/postBike';
+import getAllMyBikes from '../controllers/myBikes/getAllMyBikes';
+import getMyBike from '../controllers/myBikes/getMyBike';
+import deleteMyBike from '../controllers/myBikes/deleteMyBike';
+import updateSingleBike from '../controllers/myBikes/updateSingleBike';
+import deleteSingleBikeImage from '../controllers/myBikes/deleteSingleBikeImage';
+
+import postItem from '../controllers/myItems/postItem';
+import getAllMyItems from '../controllers/myItems/getAllMyItems';
+import getMyItem from '../controllers/myItems/getMyItem';
+import deleteMyItem from '../controllers/myItems/deleteMyItem';
+import updateSingleItem from '../controllers/myItems/updateSingleItem';
+import deleteSingleItemImage from '../controllers/myItems/deleteSingleItemImage';
 
 // This array is used to keep track of user records as they created for now. (will be replaced with DB later)
 const users = [];
@@ -44,27 +53,36 @@ const users = [];
 
 // Sign In : Route that returns the current authenticated user.
 router.get('/users', authenticateUser, userSignIn);
-
 // Sign Up : Route that create a new user
 router.post('/users', signUpValidator, userSignUp);
 
+
 // mybikes GET
 router.get('/mybikes', getAllMyBikes);
-
 // mybikes POST
-router.post('/mybikes', upload.array('image', 10), postBike);
-
+router.post('/mybikes', bikeImageUpload.array('image', 5), postBike);
 // mybikes/:id GET
 router.get('/mybikes/:id', getMyBike)
-
 // mybikes/:id DELETE
 router.delete('/mybikes/:id', deleteMyBike)
-
 // mybikes/:id/edit POST (to update)
-router.post('/mybikes/:id/edit', upload.array('image', 10), updateSingleBike)
-
+router.post('/mybikes/:id/edit', bikeImageUpload.array('image', 5), updateSingleBike)
 // mybikes/:id/edit/image POST (to delete)
 router.post('/mybikes/:id/edit/image', deleteSingleBikeImage)
+
+
+// myitems GET
+router.get('/myitems', getAllMyItems);
+// myitems POST
+router.post('/myitems', itemImageUpload.array('image', 5), postItem);
+// myitems/:id GET
+router.get('/myitems/:id', getMyItem)
+// myitems/:id DELETE
+router.delete('/myitems/:id', deleteMyItem)
+// myitems/:id/edit POST (to update)
+router.post('/myitems/:id/edit', itemImageUpload.array('image', 5), updateSingleItem)
+// myitems/:id/edit/image POST (to delete)
+router.post('/mybikes/:id/edit/image', deleteSingleItemImage)
 
 
 export default router;
