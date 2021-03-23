@@ -7,8 +7,11 @@ const postItem = async (req: Request, res: Response, next: NextFunction ) => {
         // * (images as any) solves the issue of gettting 'expression is not callable' on map()
         const images = req.files;
         const imagesData = (images as any).map( (image: any) => {
-            return {'key': image.key, 'location': image.location};
+            // console.log(image.transforms);
+            return {'key': image.transforms[0].key, 'location': image.transforms[0].location};
         })
+
+        // console.log(req.files);
 
         const itemObj = {
             user_id: req.app.locals.currentUser._id,

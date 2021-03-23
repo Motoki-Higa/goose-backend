@@ -11,7 +11,7 @@ const updateSingleBike = async (req: Request, res: Response, next: NextFunction 
         // * (images as any) solves the issue of gettting 'expression is not callable' on map()
         const images = req.files;
         const imagesData = (images as any).map( (image: any) => {
-            return {'key': image.key, 'location': image.location};
+            return {'key': image.transforms[0].key, 'location': image.transforms[0].location};
         })
 
         // ======== Take care of deleting an image from database =========

@@ -1,6 +1,7 @@
 import aws from 'aws-sdk';
 import multer from 'multer'; // middleware for handling multipart/form-data
-import multerS3 from 'multer-s3'; // Streaming multer storage engine for AWS S3
+import sharp from 'sharp'; // convert large images
+const multerS3 = require ('multer-s3-transform'); // Streaming multer storage engine for AWS S3
 
 // S3 configuration
 const s3Config = new aws.S3({
@@ -22,15 +23,20 @@ const multerS3Config = multerS3({
     s3: s3Config,
     bucket: `${process.env.S3_BUCKET_GOOSE_ITEMS}`, // with object literal, you can prevent typescript error
     // metadata for putting field name
-    metadata: function (req, file, cb) {
+    metadata: function (req: any, file: any, cb: any) {
         cb(null, { fieldName: file.fieldname });
     },
-    // Set/Modify original file name
-    key: function (req, file, cb) {
-        cb(null, Date.now().toString() + file.originalname);
-    },
-    // without defining contentType like below, the image gets downloaded instead of displaying when you access url
     contentType: multerS3.AUTO_CONTENT_TYPE,
+    shouldTransform: true,
+    transforms: [{
+        id: 'original',
+        key: function (req: any, file: any, cb: any) {
+            cb(null, Date.now().toString() + file.originalname);
+        },
+        transform: function (req: any, file: any, cb: any) {
+            cb(null, sharp().resize(820))
+        }
+    }]
 });
 
 // Create multer function for upload
