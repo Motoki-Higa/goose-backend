@@ -34,7 +34,7 @@ const multerS3Config = multerS3({
             cb(null, Date.now().toString() + file.originalname);
         },
         transform: function (req: any, file: any, cb: any) {
-            cb(null, sharp().resize(820))
+            cb(null, sharp().resize(900))
         }
     }]
 });
