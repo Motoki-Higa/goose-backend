@@ -16,20 +16,24 @@ const postBike = async (req: Request, res: Response, next: NextFunction ) => {
             brand: req.body.brand,
             builtby: req.body.builtby,
             desc: req.body.desc,
-            images: imagesData
+            images: imagesData,
+            public: req.body.public
         }
 
         if (images.length === 0) {
             console.log('At least one image is required to post a bike!');
+            res.status(400).json({
+                status: 'error',
+                message: 'At least one image is required to post a bike!'
+            });
         }
         else {
             // store values in db
             const collection = req.app.locals.db.collection('bikes');
             const result = await collection.insertOne(bikeObj);
             console.log(`${result.insertedCount} documents were inserted with the _id: ${result.insertedId}`);
+            res.send({message: req.body.name + ' is added successfully!'});
         }
-
-        res.send({message: req.body.name + ' is added successfully!'});
         
     } catch(err) {
         console.log(err)

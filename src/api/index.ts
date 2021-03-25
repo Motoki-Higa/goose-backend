@@ -13,6 +13,8 @@ import itemImageUpload from '../middlewares/itemImageUpload';
 import userSignUp from '../controllers/userSignUp';
 import userSignIn from '../controllers/userSignIn';
 
+import feed from '../controllers/feed';
+
 import postBike from '../controllers/myBikes/postBike';
 import getAllMyBikes from '../controllers/myBikes/getAllMyBikes';
 import getMyBike from '../controllers/myBikes/getMyBike';
@@ -55,6 +57,10 @@ const users = [];
 router.get('/users', authenticateUser, userSignIn);
 // Sign Up : Route that create a new user
 router.post('/users', signUpValidator, userSignUp);
+
+
+// Feed
+router.get('/feed', feed);
 
 
 // mybikes GET
