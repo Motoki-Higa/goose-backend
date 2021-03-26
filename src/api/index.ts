@@ -14,6 +14,7 @@ import userSignUp from '../controllers/userSignUp';
 import userSignIn from '../controllers/userSignIn';
 
 import feed from '../controllers/feed';
+import getBike from '../controllers/bikes/getBike';
 
 import postBike from '../controllers/myBikes/postBike';
 import getAllMyBikes from '../controllers/myBikes/getAllMyBikes';
@@ -59,8 +60,10 @@ router.get('/users', authenticateUser, userSignIn);
 router.post('/users', signUpValidator, userSignUp);
 
 
-// Feed
+// Feed GET
 router.get('/feed', feed);
+// mybikes/:id GET
+router.get('/feed/:id', getBike)
 
 
 // mybikes GET
