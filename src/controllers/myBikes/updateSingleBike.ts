@@ -24,6 +24,7 @@ const updateSingleBike = async (req: Request, res: Response, next: NextFunction 
                 brand: req.body.brand,
                 builtby: req.body.builtby,
                 desc: req.body.desc,
+                public: req.body.public
             },
             $addToSet: { images: { $each: imagesData } },
         };
