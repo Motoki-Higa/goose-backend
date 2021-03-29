@@ -13,6 +13,8 @@ import itemImageUpload from '../middlewares/itemImageUpload';
 import userSignUp from '../controllers/userSignUp';
 import userSignIn from '../controllers/userSignIn';
 
+import search from '../controllers/search';
+
 import feed from '../controllers/feed';
 import getBike from '../controllers/bikes/getBike';
 
@@ -60,10 +62,13 @@ router.get('/users', authenticateUser, userSignIn);
 router.post('/users', signUpValidator, userSignUp);
 
 
-// Feed GET
+// feed GET
 router.get('/feed', feed);
-// mybikes/:id GET
-router.get('/feed/:id', getBike)
+// feed/search POST
+router.get('/feed/search', search('bikes'));
+// feed/:id GET
+router.get('/feed/:id', getBike);
+
 
 
 // mybikes GET
