@@ -4,27 +4,15 @@ const search = (collectionName: string) => {
     return async (req: Request, res: Response, next: NextFunction) => {
         try {
             const search = req.query.q;
-            const collection = req.app.locals.db.collection(collectionName);
-            collection.createIndex({ name: "text" });
+            const collection = await req.app.locals.db.collection(collectionName);
+            // collection.dropIndex() <- use this before collection.createIndex to reset first
+            collection.createIndex({ name: "text", brand: "text" });
             const query = { 
                 public: "true",
                 $text: { $search: search } 
             };
-    
-            // filter what field of each matched document. 0 = not return, 1 = return
-            // read mongoDB drivers documentation for more details
-            const projection = {
-                _id: 1,
-                user_id: 1,
-                brand: 1,
-                name: 1,
-                desc: 1,
-                images: 1,
-                public: 1,
-                builtby: 1
-            };
-    
-            const cursor = await collection.find(query).project(projection);
+
+            const cursor = await collection.find(query);
         
             if ((await cursor.count()) === 0) {
                 console.log("No documents found!");
