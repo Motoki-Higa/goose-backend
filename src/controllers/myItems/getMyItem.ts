@@ -6,17 +6,19 @@ const getMyBike = async (req: Request, res: Response, next: NextFunction) => {
         const currentUserId = req.app.locals.currentUser._id;
         const bikeId = req.params.id;
         const collection = req.app.locals.db.collection('items');
-        const cursor = await collection.find({user_id: currentUserId, _id: ObjectID(bikeId)});
+        const item = await collection.findOne({user_id: currentUserId, _id: ObjectID(bikeId)});
 
-        // check if database has data
-        if ((await cursor.count()) === 0) {
-            console.log("No documents found!");
-        }
+        // // check if database has data
+        // if ((await cursor.count()) === 0) {
+        //     console.log("No documents found!");
+        // }
 
-        // If require all documents matched by a query to be held in memory at the same time, use toArray()
-        cursor.toArray((queryError: string, results: string) => {
-            res.json(results);
-        })
+        // // If require all documents matched by a query to be held in memory at the same time, use toArray()
+        // cursor.toArray((queryError: string, results: string) => {
+        //     res.json(results);
+        // })
+
+        res.json(item);
 
     } catch(err) {
         console.log(err);

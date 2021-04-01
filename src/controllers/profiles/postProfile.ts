@@ -4,7 +4,7 @@ const postProfile = async (req: Request, res: Response, next: NextFunction ) => 
     try {
         const profileObj = {
             user_id: req.app.locals.currentUser._id,
-            name: req.app.locals.currentUser.name,
+            username: req.app.locals.currentUser.username,
             bio: req.body.bio
         }
 

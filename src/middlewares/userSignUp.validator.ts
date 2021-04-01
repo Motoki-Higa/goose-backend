@@ -18,8 +18,20 @@ const signUpValidator = [
         }),
     check('name')
         .exists({ checkNull: true, checkFalsy: true })
-        .toLowerCase()
         .withMessage('Please provide a value for "name"'),
+    check('username')
+        .exists({ checkNull: true, checkFalsy: true })
+        .withMessage('Please provide a value for "username"')
+        .toLowerCase()
+        .custom(async (value, {req}) => { 
+            // this custom function checks if username is already taken or not
+            const collection = req.app.locals.db.collection('users');
+            const user = await collection.findOne({username: value});
+                  
+            if (user) { 
+                throw new Error('Username is already taken') 
+            } 
+        }),
     check('password')
         .exists({ checkNull: true, checkFalsy: true })
         .withMessage('Please provide a value for "password"'),

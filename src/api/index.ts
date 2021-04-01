@@ -98,13 +98,13 @@ router.delete('/myitems/:id', deleteMyItem);
 // myitems/:id/edit POST (to update)
 router.post('/myitems/:id/edit', itemImageUpload.array('image', 5), updateSingleItem);
 // myitems/:id/edit/image POST (to delete)
-router.post('/mybikes/:id/edit/image', deleteSingleItemImage);
+router.post('/myitems/:id/edit/image', deleteSingleItemImage);
 
 
 // profile POST
 router.post('/profile', postProfile);
 // profile GET
-router.get('/:profile', getProfile);
+router.get('/profile/:username', getProfile);
 
 
 
