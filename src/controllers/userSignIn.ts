@@ -6,7 +6,6 @@ const userSignIn = async (req: Request, res: Response, next: NextFunction) => {
   
         res.json({
             name: user.name,
-            // username: user.username,
         });
     } catch(err) {
         res.json({ message: err});

@@ -5,6 +5,7 @@ import { Request, Response, NextFunction } from 'express';
 const signUpValidator = [
     check('email')
         .exists({ checkNull: true, checkFalsy: true })
+        .toLowerCase()
         .withMessage('Please provide a value for "email"')
         .custom(async (value, {req}) => { 
             // this custom function checks if email is already in use or not
@@ -17,6 +18,7 @@ const signUpValidator = [
         }),
     check('name')
         .exists({ checkNull: true, checkFalsy: true })
+        .toLowerCase()
         .withMessage('Please provide a value for "name"'),
     check('password')
         .exists({ checkNull: true, checkFalsy: true })

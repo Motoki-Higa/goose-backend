@@ -14,6 +14,7 @@ import userSignUp from '../controllers/userSignUp';
 import userSignIn from '../controllers/userSignIn';
 
 import postProfile from '../controllers/profiles/postProfile';
+import getProfile from '../controllers/profiles/getProfile';
 
 import search from '../controllers/search';
 
@@ -63,8 +64,6 @@ router.get('/users', authenticateUser, userSignIn);
 // Sign Up : Route that create a new user
 router.post('/users', signUpValidator, userSignUp);
 
-// profile POST
-router.post('/profile', postProfile);
 
 // feed GET
 router.get('/feed', feed);
@@ -73,18 +72,19 @@ router.get('/feed/search', search('bikes'));
 // feed/:id GET
 router.get('/feed/:id', getBike);
 
+
 // mybikes GET
 router.get('/mybikes', getAllMyBikes);
 // mybikes POST
 router.post('/mybikes', bikeImageUpload.array('image', 5), postBike);
 // mybikes/:id GET
-router.get('/mybikes/:id', getMyBike)
+router.get('/mybikes/:id', getMyBike);
 // mybikes/:id DELETE
-router.delete('/mybikes/:id', deleteMyBike)
+router.delete('/mybikes/:id', deleteMyBike);
 // mybikes/:id/edit POST (to update)
-router.post('/mybikes/:id/edit', bikeImageUpload.array('image', 5), updateSingleBike)
+router.post('/mybikes/:id/edit', bikeImageUpload.array('image', 5), updateSingleBike);
 // mybikes/:id/edit/image POST (to delete)
-router.post('/mybikes/:id/edit/image', deleteSingleBikeImage)
+router.post('/mybikes/:id/edit/image', deleteSingleBikeImage);
 
 
 // myitems GET
@@ -92,13 +92,20 @@ router.get('/myitems', getAllMyItems);
 // myitems POST
 router.post('/myitems', itemImageUpload.array('image', 5), postItem);
 // myitems/:id GET
-router.get('/myitems/:id', getMyItem)
+router.get('/myitems/:id', getMyItem);
 // myitems/:id DELETE
-router.delete('/myitems/:id', deleteMyItem)
+router.delete('/myitems/:id', deleteMyItem);
 // myitems/:id/edit POST (to update)
-router.post('/myitems/:id/edit', itemImageUpload.array('image', 5), updateSingleItem)
+router.post('/myitems/:id/edit', itemImageUpload.array('image', 5), updateSingleItem);
 // myitems/:id/edit/image POST (to delete)
-router.post('/mybikes/:id/edit/image', deleteSingleItemImage)
+router.post('/mybikes/:id/edit/image', deleteSingleItemImage);
+
+
+// profile POST
+router.post('/profile', postProfile);
+// profile GET
+router.get('/:profile', getProfile);
+
 
 
 export default router;

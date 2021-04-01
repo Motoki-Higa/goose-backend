@@ -12,7 +12,7 @@ const authenticateUser = async (req: Request, res: Response, next: NextFunction)
     if (credentials){
         // Look for a user whose `email` matches the credentials `name`(email field is used for this app) property.
         const collection = req.app.locals.db.collection('users');
-        const user = await collection.findOne({email: credentials.name});
+        const user = await collection.findOne({email: credentials.name.toLowerCase()});
 
         if (user){
             // bcryptjs.compareSync(): second argument hashes the user password to compare with already hashed password from db

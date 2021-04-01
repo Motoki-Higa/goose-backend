@@ -7,7 +7,6 @@ const userSignUp = async (req: Request, res: Response, next: NextFunction) => {
         const user: object = {
             email: req.body.email,
             name: req.body.name,
-            // username: req.body.username,
             password: bcryptjs.hashSync(req.body.password)
         };
 
