@@ -13,6 +13,8 @@ import itemImageUpload from '../middlewares/itemImageUpload';
 import userSignUp from '../controllers/userSignUp';
 import userSignIn from '../controllers/userSignIn';
 
+import postProfile from '../controllers/profiles/postProfile';
+
 import search from '../controllers/search';
 
 import feed from '../controllers/feed';
@@ -61,6 +63,8 @@ router.get('/users', authenticateUser, userSignIn);
 // Sign Up : Route that create a new user
 router.post('/users', signUpValidator, userSignUp);
 
+// profile POST
+router.post('/profile', postProfile);
 
 // feed GET
 router.get('/feed', feed);
@@ -68,8 +72,6 @@ router.get('/feed', feed);
 router.get('/feed/search', search('bikes'));
 // feed/:id GET
 router.get('/feed/:id', getBike);
-
-
 
 // mybikes GET
 router.get('/mybikes', getAllMyBikes);

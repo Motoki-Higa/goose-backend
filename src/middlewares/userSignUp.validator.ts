@@ -18,9 +18,6 @@ const signUpValidator = [
     check('name')
         .exists({ checkNull: true, checkFalsy: true })
         .withMessage('Please provide a value for "name"'),
-    check('username')
-        .exists({ checkNull: true, checkFalsy: true })
-        .withMessage('Please provide a value for "username"'),
     check('password')
         .exists({ checkNull: true, checkFalsy: true })
         .withMessage('Please provide a value for "password"'),
