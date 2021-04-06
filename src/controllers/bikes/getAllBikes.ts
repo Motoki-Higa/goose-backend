@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-const feed = async (req: Request, res: Response, next: NextFunction) => {
+const getAllBikes = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const collection = req.app.locals.db.collection('bikes');
         const cursor = await collection.find({public: 'true'});
@@ -19,4 +19,4 @@ const feed = async (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
-export default feed;
+export default getAllBikes;

@@ -8,6 +8,7 @@ import signUpValidator from '../middlewares/userSignUp.validator';
 import authenticateUser from '../middlewares/userSignIn.authenticate';
 import bikeImageUpload from '../middlewares/bikeImageUpload';
 import itemImageUpload from '../middlewares/itemImageUpload';
+import profileImageUpload from '../middlewares/profileImageUpload';
 
 // controllers
 import userSignUp from '../controllers/userSignUp';
@@ -18,7 +19,7 @@ import getProfile from '../controllers/profiles/getProfile';
 
 import search from '../controllers/search';
 
-import feed from '../controllers/feed';
+import getAllBikes from '../controllers/bikes/getAllBikes';
 import getBike from '../controllers/bikes/getBike';
 
 import postBike from '../controllers/myBikes/postBike';
@@ -66,7 +67,7 @@ router.post('/users', signUpValidator, userSignUp);
 
 
 // feed GET
-router.get('/feed', feed);
+router.get('/feed', getAllBikes);
 // feed/search POST
 router.get('/feed/search', search('bikes'));
 // feed/:id GET
@@ -102,7 +103,7 @@ router.post('/myitems/:id/edit/image', deleteSingleItemImage);
 
 
 // profile POST
-router.post('/profile', postProfile);
+router.post('/profile', profileImageUpload.array('image', 1), postProfile);
 // profile GET
 router.get('/profile/:username', getProfile);
 
