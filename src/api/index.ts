@@ -14,51 +14,30 @@ import profileImageUpload from '../middlewares/profileImageUpload';
 import userSignUp from '../controllers/userSignUp';
 import userSignIn from '../controllers/userSignIn';
 
-import postProfile from '../controllers/profiles/postProfile';
-import getProfile from '../controllers/profiles/getProfile';
-
+import feedAllBikes from '../controllers/feed/feedAllBikes';
 import search from '../controllers/search';
+import feedSingleBike from '../controllers/feed/feedSingleBike';
 
+import postBike from '../controllers/bikes/postBike';
+import deleteBike from '../controllers/bikes/deleteBike';
+import updateSingleBike from '../controllers/bikes/updateSingleBike';
+import deleteSingleBikeImage from '../controllers/bikes/deleteSingleBikeImage';
+import getAllMyBikes from '../controllers/bikes/getAllMyBikes';
 import getAllBikes from '../controllers/bikes/getAllBikes';
-import getBike from '../controllers/bikes/getBike';
+import getSingleBike from '../controllers/bikes/getSingleBike';
 
-import postBike from '../controllers/myBikes/postBike';
-import getAllMyBikes from '../controllers/myBikes/getAllMyBikes';
-import getMyBike from '../controllers/myBikes/getMyBike';
-import deleteMyBike from '../controllers/myBikes/deleteMyBike';
-import updateSingleBike from '../controllers/myBikes/updateSingleBike';
-import deleteSingleBikeImage from '../controllers/myBikes/deleteSingleBikeImage';
+import postItem from '../controllers/items/postItem';
+import deleteItem from '../controllers/items/deleteItem';
+import updateSingleItem from '../controllers/items/updateSingleItem';
+import deleteSingleItemImage from '../controllers/items/deleteSingleItemImage';
+import getAllItems from '../controllers/items/getAllItems';
+import getSingleItem from '../controllers/items/getSingleItem';
 
-import postItem from '../controllers/myItems/postItem';
-import getAllMyItems from '../controllers/myItems/getAllMyItems';
-import getMyItem from '../controllers/myItems/getMyItem';
-import deleteMyItem from '../controllers/myItems/deleteMyItem';
-import updateSingleItem from '../controllers/myItems/updateSingleItem';
-import deleteSingleItemImage from '../controllers/myItems/deleteSingleItemImage';
+import postProfile from '../controllers/profiles/postProfile';
+import getProfileById from '../controllers/profiles/getProfileById';
+import getProfileByUsername from '../controllers/profiles/getProfileByUsername';
 
-// This array is used to keep track of user records as they created for now. (will be replaced with DB later)
-const users = [];
 
-/* GET home page. */
-// router.get('/users', async (req, res, next) => {
-//     try {
-//         const collection = req.app.locals.db.collection('users');
-//         const limit = 20;
-//         const cursor = await collection.find({email: "mokkyhiga@gmail.com"}).limit(limit);
-
-//         // check if database has data
-//         if ((await cursor.count()) === 0) {
-//             console.log("No documents found!");
-//         }
-
-//         // If require all documents matched by a query to be held in memory at the same time, use toArray()
-//         cursor.toArray((queryError: string, results: string) => {
-//             res.json(results);
-//         })
-//     } catch(err) {
-//         res.json({ message: err });
-//     }
-// });
 
 // Sign In : Route that returns the current authenticated user.
 router.get('/users', authenticateUser, userSignIn);
@@ -67,45 +46,49 @@ router.post('/users', signUpValidator, userSignUp);
 
 
 // feed GET
-router.get('/feed', getAllBikes);
+router.get('/feed', feedAllBikes);
 // feed/search POST
 router.get('/feed/search', search('bikes'));
 // feed/:id GET
-router.get('/feed/:id', getBike);
+router.get('/feed/:id', feedSingleBike);
 
 
-// mybikes GET
-router.get('/mybikes', getAllMyBikes);
-// mybikes POST
-router.post('/mybikes', bikeImageUpload.array('image', 5), postBike);
-// mybikes/:id GET
-router.get('/mybikes/:id', getMyBike);
-// mybikes/:id DELETE
-router.delete('/mybikes/:id', deleteMyBike);
-// mybikes/:id/edit POST (to update)
-router.post('/mybikes/:id/edit', bikeImageUpload.array('image', 5), updateSingleBike);
-// mybikes/:id/edit/image POST (to delete)
-router.post('/mybikes/:id/edit/image', deleteSingleBikeImage);
+// bikes POST
+router.post('/bikes', bikeImageUpload.array('image', 5), postBike);
+// bikes DELETE
+router.delete('/bikes/:id', deleteBike);
+// bikes/:id/edit POST (to update)
+router.post('/bikes/:id/edit', bikeImageUpload.array('image', 5), updateSingleBike);
+// bikes/:id/edit/image POST (to delete)
+router.post('/bikes/:id/edit/image', deleteSingleBikeImage);
+// bikes GET (My bikes *publicity true AND false)
+router.get('/:userId/myBikes', getAllMyBikes);
+// bikes GET (user's bikes *publicity true ONLY)
+router.get('/:userId/bikes', getAllBikes);
+// bike(single) GET
+router.get('/:userId/bikes/:id', getSingleBike);
 
 
-// myitems GET
-router.get('/myitems', getAllMyItems);
-// myitems POST
-router.post('/myitems', itemImageUpload.array('image', 5), postItem);
-// myitems/:id GET
-router.get('/myitems/:id', getMyItem);
-// myitems/:id DELETE
-router.delete('/myitems/:id', deleteMyItem);
-// myitems/:id/edit POST (to update)
-router.post('/myitems/:id/edit', itemImageUpload.array('image', 5), updateSingleItem);
-// myitems/:id/edit/image POST (to delete)
-router.post('/myitems/:id/edit/image', deleteSingleItemImage);
+// items POST
+router.post('/items', itemImageUpload.array('image', 5), postItem);
+// items/:id DELETE
+router.delete('/items/:id', deleteItem);
+// items/:id/edit POST (to update)
+router.post('/items/:id/edit', itemImageUpload.array('image', 5), updateSingleItem);
+// items/:id/edit/image POST (to delete)
+router.post('/items/:id/edit/image', deleteSingleItemImage);
+// items GET
+router.get('/:userId/items', getAllItems);
+// item(single) GET
+router.get('/:userId/items/:id', getSingleItem);
 
 
+// profile GET (this route is used for finding a user through items such as bike or item)
+router.get('/:userId/profile', getProfileById);
 // profile POST
 router.post('/profile', profileImageUpload.array('image', 1), postProfile);
 // profile GET
-router.get('/profile/:username', getProfile);
+router.get('/profile/:username', getProfileByUsername);
 
 
 

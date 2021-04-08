@@ -1,11 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-const { ObjectID } = require('mongodb');
 
-const getAllBikes = async (req: Request, res: Response, next: NextFunction) => {
+const feedAllBikes = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const userId = req.params.userId;
         const collection = req.app.locals.db.collection('bikes');
-        const cursor = await collection.find({user_id: ObjectID(userId), public: 'true'});
+        const cursor = await collection.find({public: 'true'});
 
         // check if database has data
         if ((await cursor.count()) === 0) {
@@ -21,4 +19,4 @@ const getAllBikes = async (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
-export default getAllBikes;
+export default feedAllBikes;

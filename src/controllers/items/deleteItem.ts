@@ -3,7 +3,7 @@ import aws, { AWSError } from 'aws-sdk';
 const { ObjectID } = require('mongodb');
 
 
-const deleteMyItem = async (req: Request, res: Response, next: NextFunction) => {
+const deleteItem = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const currentUserId = req.app.locals.currentUser._id;
         const itemId = req.params.id;
@@ -45,4 +45,4 @@ const deleteMyItem = async (req: Request, res: Response, next: NextFunction) => 
     }
 }
 
-export default deleteMyItem;
+export default deleteItem;

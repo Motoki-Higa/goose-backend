@@ -1,11 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
+const { ObjectID } = require('mongodb');
 
-const getProfile = async (req: Request, res: Response, next: NextFunction) => {
+const getProfileByUsername = async (req: Request, res: Response, next: NextFunction) => {
     try {
         // const currentUserId = req.app.locals.currentUser._id;
-        const profileName = req.params.username;
+        const username = req.params.username;
         const collection = req.app.locals.db.collection('profiles');
-        const user = await collection.findOne({username: profileName});
+        const user = await collection.findOne({username: username});
 
         res.json(user)
 
@@ -14,4 +15,4 @@ const getProfile = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-export default getProfile;
+export default getProfileByUsername;

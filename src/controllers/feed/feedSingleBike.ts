@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 const { ObjectID } = require('mongodb');
 
-const getMyBike = async (req: Request, res: Response, next: NextFunction) => {
+const feedSingleBike = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const bikeId = req.params.id;
         const collection = req.app.locals.db.collection('bikes');
@@ -24,4 +24,4 @@ const getMyBike = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-export default getMyBike;
+export default feedSingleBike;

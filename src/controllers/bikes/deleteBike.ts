@@ -3,7 +3,7 @@ import aws, { AWSError } from 'aws-sdk';
 const { ObjectID } = require('mongodb');
 
 
-const deleteMyBike = async (req: Request, res: Response, next: NextFunction) => {
+const deleteBike = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const currentUserId = req.app.locals.currentUser._id;
         const bikeId = req.params.id;
@@ -13,7 +13,6 @@ const deleteMyBike = async (req: Request, res: Response, next: NextFunction) => 
             return { 'Key': image.key } 
         });
 
-        // console.log(imageKeys);
 
         // ===== Take care of deleting an item from database ======
         const itemToDelete = collection.deleteOne({user_id: currentUserId, _id: ObjectID(bikeId)});
@@ -45,4 +44,4 @@ const deleteMyBike = async (req: Request, res: Response, next: NextFunction) => 
     }
 }
 
-export default deleteMyBike;
+export default deleteBike;

@@ -5,6 +5,7 @@ const userSignIn = async (req: Request, res: Response, next: NextFunction) => {
         const user = req.app.locals.currentUser;
   
         res.json({
+            id: user._id,
             name: user.name,
             username: user.username,
         });
