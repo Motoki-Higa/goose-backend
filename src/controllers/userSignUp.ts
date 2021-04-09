@@ -11,10 +11,24 @@ const userSignUp = async (req: Request, res: Response, next: NextFunction) => {
             password: bcryptjs.hashSync(req.body.password)
         };
 
-        // store values in db
+        // store values in database (users)
         const collection = req.app.locals.db.collection('users');
         const result = await collection.insertOne(user);
         console.log(`${result.insertedCount} documents were inserted with the _id: ${result.insertedId}`);
+
+        // profile
+        const profileObj = {
+            user_id: result.insertedId,
+            username: req.body.username,
+            bio: "",
+            website: "",
+            image: []
+        }
+
+        // create associate profile database
+        const profilesCollection = req.app.locals.db.collection('profiles');
+        const profilesResult = await profilesCollection.insertOne(profileObj);
+        console.log(`Associate profile object was inserted`);
 
         return res.status(201).end();
     } catch(err) {
