@@ -15,7 +15,7 @@ import userSignUp from '../controllers/userSignUp';
 import userSignIn from '../controllers/userSignIn';
 
 import feedAllBikes from '../controllers/feed/feedAllBikes';
-import search from '../controllers/search';
+import feedSearch from '../controllers/feed/feedSearch';
 import feedSingleBike from '../controllers/feed/feedSingleBike';
 
 import postBike from '../controllers/bikes/postBike';
@@ -24,6 +24,7 @@ import updateSingleBike from '../controllers/bikes/updateSingleBike';
 import deleteSingleBikeImage from '../controllers/bikes/deleteSingleBikeImage';
 import getAllMyBikes from '../controllers/bikes/getAllMyBikes';
 import getAllBikes from '../controllers/bikes/getAllBikes';
+import bikesSearch from '../controllers/bikes/bikesSearch';
 import getSingleBike from '../controllers/bikes/getSingleBike';
 
 import postItem from '../controllers/items/postItem';
@@ -31,6 +32,7 @@ import deleteItem from '../controllers/items/deleteItem';
 import updateSingleItem from '../controllers/items/updateSingleItem';
 import deleteSingleItemImage from '../controllers/items/deleteSingleItemImage';
 import getAllItems from '../controllers/items/getAllItems';
+import itemsSearch from '../controllers/items/itemsSearch';
 import getSingleItem from '../controllers/items/getSingleItem';
 
 import postProfile from '../controllers/profiles/postProfile';
@@ -48,7 +50,7 @@ router.post('/users', signUpValidator, userSignUp);
 // feed GET
 router.get('/feed', feedAllBikes);
 // feed/search POST
-router.get('/feed/search', search('bikes'));
+router.get('/feed/search', feedSearch('bikes'));
 // feed/:id GET
 router.get('/feed/:id', feedSingleBike);
 
@@ -65,6 +67,10 @@ router.post('/bikes/:id/edit/image', deleteSingleBikeImage);
 router.get('/:userId/myBikes', getAllMyBikes);
 // bikes GET (user's bikes *publicity true ONLY)
 router.get('/:userId/bikes', getAllBikes);
+// bikes/search POST
+router.get('/:userId/myBikes/search', bikesSearch('bikes'));
+// bikes/search POST
+router.get('/:userId/bikes/search', bikesSearch('bikes'));
 // bike(single) GET
 router.get('/:userId/bikes/:id', getSingleBike);
 
@@ -79,6 +85,8 @@ router.post('/items/:id/edit', itemImageUpload.array('image', 5), updateSingleIt
 router.post('/items/:id/edit/image', deleteSingleItemImage);
 // items GET
 router.get('/:userId/items', getAllItems);
+// items/search POST
+router.get('/:userId/items/search', itemsSearch('items'));
 // item(single) GET
 router.get('/:userId/items/:id', getSingleItem);
 

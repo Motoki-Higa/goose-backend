@@ -1,14 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
+const { ObjectID } = require('mongodb');
 
-const search = (collectionName: string) => {
+const itemsSearch = (collectionName: string) => {
     return async (req: Request, res: Response, next: NextFunction) => {
         try {
+            const userId = req.params.userId;
             const search = req.query.q;
             const collection = await req.app.locals.db.collection(collectionName);
-            // collection.dropIndex() <- use this before collection.createIndex to reset first
+            // collection.dropIndex() // <- use this before collection.createIndex to reset first
             collection.createIndex({ name: "text", brand: "text" });
             const query = { 
-                public: "true",
+                user_id: ObjectID(userId),
                 $text: { $search: search } 
             };
 
@@ -27,4 +29,4 @@ const search = (collectionName: string) => {
     }
 }
 
-export default search;
+export default itemsSearch;
