@@ -22,7 +22,10 @@ const userSignUp = async (req: Request, res: Response, next: NextFunction) => {
             username: req.body.username,
             bio: "",
             website: "",
-            image: []
+            image: {
+                key: "",
+                location: ""
+            }
         }
 
         // create associate profile database

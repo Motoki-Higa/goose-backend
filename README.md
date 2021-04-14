@@ -18,6 +18,9 @@ Make sure you have installed all of the following prerequisites on your developm
 ### Built with
 
 - [Express.js](https://www.npmjs.com/package/express) - Backend
+- [mongoDB](https://www.mongodb.com/) - Database
+- [AWS S3](https://aws.amazon.com/s3/) - FS
+- [TypeScript.js](https://www.npmjs.com/package/typescript)
 
 #### Key packages
 
@@ -37,4 +40,12 @@ To install dependencies, run this in the application folder from the command-lin
 
 ```
 npm install
+```
+
+### Start a project
+
+Change directory to the project folder, then run:
+
+```
+npm run dev
 ```

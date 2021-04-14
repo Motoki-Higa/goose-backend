@@ -38,6 +38,8 @@ import getSingleItem from '../controllers/items/getSingleItem';
 import postProfile from '../controllers/profiles/postProfile';
 import getProfileById from '../controllers/profiles/getProfileById';
 import getProfileByUsername from '../controllers/profiles/getProfileByUsername';
+import updateProfile from '../controllers/profiles/updateProfile';
+import deleteProfileImage from '../controllers/profiles/deleteProfileImage';
 
 
 
@@ -91,12 +93,16 @@ router.get('/:userId/items/search', itemsSearch('items'));
 router.get('/:userId/items/:id', getSingleItem);
 
 
-// profile GET (this route is used for finding a user through items such as bike or item)
-router.get('/:userId/profile', getProfileById);
 // profile POST
-router.post('/profile', profileImageUpload.array('image', 1), postProfile);
+// * initial profile post is automatically done on sign up
 // profile GET
 router.get('/profile/:username', getProfileByUsername);
+// profile GET (this route is used for finding a user through items such as bike or item)
+router.get('/:userId/profile', getProfileById);
+// profile update POST 
+router.post('/profile/:id/edit', profileImageUpload.single('image'), updateProfile);
+// profile image POST (to delete)
+router.delete('/profile/:userId/image/:imageKey', deleteProfileImage);
 
 
 
