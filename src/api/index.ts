@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction, Router } from 'express';
 var router = Router();
-import { ObjectID } from 'mongodb';
-import aws from 'aws-sdk';
+
 
 // middlewares & validators
 import signUpValidator from '../middlewares/userSignUp.validator';
@@ -40,6 +39,9 @@ import getProfileById from '../controllers/profiles/getProfileById';
 import getProfileByUsername from '../controllers/profiles/getProfileByUsername';
 import updateProfile from '../controllers/profiles/updateProfile';
 import deleteProfileImage from '../controllers/profiles/deleteProfileImage';
+
+import saveToBookmark from '../controllers/bookmarks/saveToBookmark';
+import removeFromBookmark from '../controllers/bookmarks/removeFromBookmark';
 
 
 
@@ -103,6 +105,12 @@ router.get('/:userId/profile', getProfileById);
 router.post('/profile/:id/edit', profileImageUpload.single('image'), updateProfile);
 // profile image POST (to delete)
 router.delete('/profile/:userId/image/:imageKey', deleteProfileImage);
+
+
+// save to bookmark
+router.post('/bookmark/bikes/:id', saveToBookmark);
+// remove from bookmark
+router.delete('/bookmark/bikes/:id', removeFromBookmark);
 
 
 
