@@ -17,7 +17,10 @@ const removeFromBookmark = async (req: Request, res: Response, next: NextFunctio
         const result = await collection.updateOne(filter, updateDoc);
         console.log(`${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,);
 
-        res.send({message: req.params.id + ' is removed from bookmark!'});
+        res.send({
+            message: req.params.id + ' is removed from bookmark!',
+            id: req.params.id
+        });
 
     } catch(err){
         console.log(err);

@@ -1,6 +1,5 @@
-import { Request, Response, NextFunction, Router } from 'express';
+import { Router } from 'express';
 var router = Router();
-
 
 // middlewares & validators
 import signUpValidator from '../middlewares/userSignUp.validator';
@@ -34,12 +33,12 @@ import getAllItems from '../controllers/items/getAllItems';
 import itemsSearch from '../controllers/items/itemsSearch';
 import getSingleItem from '../controllers/items/getSingleItem';
 
-import postProfile from '../controllers/profiles/postProfile';
 import getProfileById from '../controllers/profiles/getProfileById';
 import getProfileByUsername from '../controllers/profiles/getProfileByUsername';
 import updateProfile from '../controllers/profiles/updateProfile';
 import deleteProfileImage from '../controllers/profiles/deleteProfileImage';
 
+import getBookmark from '../controllers/bookmarks/getBookmark';
 import saveToBookmark from '../controllers/bookmarks/saveToBookmark';
 import removeFromBookmark from '../controllers/bookmarks/removeFromBookmark';
 
@@ -107,6 +106,8 @@ router.post('/profile/:id/edit', profileImageUpload.single('image'), updateProfi
 router.delete('/profile/:userId/image/:imageKey', deleteProfileImage);
 
 
+// get bookmarks by user_id
+router.get('/:userId/bookmark', getBookmark);
 // save to bookmark
 router.post('/bookmark/bikes/:id', saveToBookmark);
 // remove from bookmark

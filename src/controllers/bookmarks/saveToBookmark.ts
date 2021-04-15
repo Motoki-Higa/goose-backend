@@ -9,8 +9,8 @@ const saveToBookmark = async (req: Request, res: Response, next: NextFunction) =
 
 
         /* 
-            if there is no users bookmark object in the collection, then create one and save item 
-            otherwise, add to existing object.
+        if there is no users bookmark object in the collection, then create one and save item 
+        otherwise, add to existing object.
         */
         if (bookmarkObj){
             const filter = { user_id: userId };
@@ -22,8 +22,12 @@ const saveToBookmark = async (req: Request, res: Response, next: NextFunction) =
 
             // update users bookmark obj
             const result = await collection.updateOne(filter, updateDoc);
+            console.log(result);
             console.log(`${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,);
-            res.send({message: req.params.id + ' is added to bookmark!'});
+            res.send({
+                message: req.params.id + ' is added to bookmark!',
+                id: req.params.id
+            });
         } 
         else {
             const bookmarkObj = {
@@ -34,7 +38,10 @@ const saveToBookmark = async (req: Request, res: Response, next: NextFunction) =
             // create a new bookmark obj
             const result = await collection.insertOne(bookmarkObj);
             console.log(`${result.insertedCount} documents were inserted with the _id: ${result.insertedId}`);
-            res.send({message: 'First bike' + req.params.id + ' is saved to bookmark!'});
+            res.send({
+                message: 'First bike' + req.params.id + ' is saved to bookmark!',
+                id: req.params.id
+            });
         }
 
     } catch(err){
