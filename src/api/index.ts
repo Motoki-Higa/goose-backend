@@ -39,6 +39,7 @@ import updateProfile from '../controllers/profiles/updateProfile';
 import deleteProfileImage from '../controllers/profiles/deleteProfileImage';
 
 import getBookmark from '../controllers/bookmarks/getBookmark';
+import getSavedBikes from '../controllers/bookmarks/getSavedBikes';
 import saveToBookmark from '../controllers/bookmarks/saveToBookmark';
 import removeFromBookmark from '../controllers/bookmarks/removeFromBookmark';
 
@@ -108,6 +109,8 @@ router.delete('/profile/:userId/image/:imageKey', deleteProfileImage);
 
 // get bookmarks by user_id
 router.get('/:userId/bookmark', getBookmark);
+// get all bookmark(bikes)
+router.post('/:userId/bookmark/bikes', getSavedBikes);
 // save to bookmark
 router.post('/bookmark/bikes/:id', saveToBookmark);
 // remove from bookmark
