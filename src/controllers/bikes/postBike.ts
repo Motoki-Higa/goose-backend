@@ -12,7 +12,6 @@ const postBike = async (req: Request, res: Response, next: NextFunction ) => {
 
         const bikeObj = {
             user_id: req.app.locals.currentUser._id,
-            username: req.app.locals.currentUser.username,
             name: req.body.name,
             brand: req.body.brand,
             builtby: req.body.builtby,
