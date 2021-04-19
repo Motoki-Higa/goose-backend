@@ -96,28 +96,28 @@ router.get('/:userId/items/search', itemsSearch('items'));
 router.get('/:userId/items/:id', getSingleItem);
 
 
-// profile POST
-// * initial profile post is automatically done on sign up
-// profile GET
-router.get('/profile/:username', getProfileByUsername);
-// profile GET (this route is used for finding a user through items such as bike or item)
-router.get('/:userId/profile', getProfileById);
-// profile update POST 
-router.post('/profile/:id/edit', profileImageUpload.single('image'), updateProfile);
-// profile image POST (to delete)
-router.delete('/profile/:userId/image/:imageKey', deleteProfileImage);
-
-
+// save to bookmark POST
+router.post('/bookmark/bikes/:id', saveToBookmark);
+// remove from bookmark DELETE
+router.delete('/bookmark/bikes/:id', removeFromBookmark);
 // get bookmarks by user_id
 router.get('/:userId/bookmark', getBookmark);
 // get all bookmark(bikes)
 router.post('/:userId/bookmark/bikes', getSavedBikes);
 // get all bookmark(bikes)
 router.post('/:userId/bookmark/bikes/search', bookmarkSearch('bikes'));
-// save to bookmark
-router.post('/bookmark/bikes/:id', saveToBookmark);
-// remove from bookmark
-router.delete('/bookmark/bikes/:id', removeFromBookmark);
+
+
+// profile POST
+// * initial profile post is automatically done on sign up
+// profile GET
+router.get('/profile/:username', getProfileByUsername);
+// profile GET (this route is used for finding a user through items such as bike or item)
+router.get('/profile/userId/:userId', getProfileById);
+// profile update POST 
+router.post('/profile/:id/edit', profileImageUpload.single('image'), updateProfile);
+// profile image POST (to delete)
+router.delete('/profile/:userId/image/:imageKey', deleteProfileImage);
 
 
 
