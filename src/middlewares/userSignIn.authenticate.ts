@@ -24,6 +24,7 @@ const authenticateUser = async (req: Request, res: Response, next: NextFunction)
         
                 // Store the user on the Request object.
                 // req.currentUser = user;
+                console.log(user);
                 req.app.locals.currentUser = user;
             } else {
                 message = `Authentication failure for email: ${user.email}`;

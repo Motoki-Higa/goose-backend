@@ -4,13 +4,15 @@ var router = Router();
 // middlewares & validators
 import signUpValidator from '../middlewares/userSignUp.validator';
 import authenticateUser from '../middlewares/userSignIn.authenticate';
+import userEditValidator from '../middlewares/userEdit.validator';
 import bikeImageUpload from '../middlewares/bikeImageUpload';
 import itemImageUpload from '../middlewares/itemImageUpload';
 import profileImageUpload from '../middlewares/profileImageUpload';
 
 // controllers
-import userSignUp from '../controllers/userSignUp';
-import userSignIn from '../controllers/userSignIn';
+import userSignUp from '../controllers/user/userSignUp';
+import userSignIn from '../controllers/user/userSignIn';
+import userUpdate from '../controllers/user/userUpdate';
 
 import feedAllBikes from '../controllers/feed/feedAllBikes';
 import feedSearch from '../controllers/feed/feedSearch';
@@ -50,6 +52,8 @@ import removeFromBookmark from '../controllers/bookmarks/removeFromBookmark';
 router.get('/users', authenticateUser, userSignIn);
 // Sign Up : Route that create a new user
 router.post('/users', signUpValidator, userSignUp);
+// Edit : Edit account
+router.put('/users/:id', userEditValidator, userUpdate);
 
 
 // feed GET
@@ -72,9 +76,9 @@ router.post('/bikes/:id/edit/image', deleteSingleBikeImage);
 router.get('/:userId/myBikes', getAllMyBikes);
 // bikes GET (user's bikes *publicity true ONLY)
 router.get('/:userId/bikes', getAllBikes);
-// bikes/search POST
+// bikes/search GET
 router.get('/:userId/myBikes/search', bikesSearch('bikes'));
-// bikes/search POST
+// bikes/search GET
 router.get('/:userId/bikes/search', bikesSearch('bikes'));
 // bike(single) GET
 router.get('/:userId/bikes/:id', getSingleBike);
@@ -90,7 +94,7 @@ router.post('/items/:id/edit', itemImageUpload.array('image', 5), updateSingleIt
 router.post('/items/:id/edit/image', deleteSingleItemImage);
 // items GET
 router.get('/:userId/items', getAllItems);
-// items/search POST
+// items/search GET
 router.get('/:userId/items/search', itemsSearch('items'));
 // item(single) GET
 router.get('/:userId/items/:id', getSingleItem);
