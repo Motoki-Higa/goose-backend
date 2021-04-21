@@ -8,11 +8,13 @@ import userEditValidator from '../middlewares/userEdit.validator';
 import bikeImageUpload from '../middlewares/bikeImageUpload';
 import itemImageUpload from '../middlewares/itemImageUpload';
 import profileImageUpload from '../middlewares/profileImageUpload';
+import changePwAuthenticate from '../middlewares/changePw.authenticate';
 
 // controllers
 import userSignUp from '../controllers/user/userSignUp';
 import userSignIn from '../controllers/user/userSignIn';
 import userUpdate from '../controllers/user/userUpdate';
+import changePw from '../controllers/user/changePw';
 
 import feedAllBikes from '../controllers/feed/feedAllBikes';
 import feedSearch from '../controllers/feed/feedSearch';
@@ -52,8 +54,10 @@ import removeFromBookmark from '../controllers/bookmarks/removeFromBookmark';
 router.get('/users', authenticateUser, userSignIn);
 // Sign Up : Route that create a new user
 router.post('/users', signUpValidator, userSignUp);
-// Edit : Edit account
+// account PUT (to edit)
 router.put('/users/:id', userEditValidator, userUpdate);
+// password PUT (to change)
+router.put('/users/:id/password/change', changePwAuthenticate, changePw);
 
 
 // feed GET

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 const { ObjectID } = require('mongodb');
 
-const updateSingleBike = async (req: Request, res: Response, next: NextFunction ) => {
+const userUpdate = async (req: Request, res: Response, next: NextFunction ) => {
     try {
         const userId = req.params.id;
         const userObj = {
@@ -38,18 +38,27 @@ const updateSingleBike = async (req: Request, res: Response, next: NextFunction 
         console.log(`${profilesResult.matchedCount} document(s) matched the filter, updated ${profilesResult.modifiedCount} document(s)`,);
         // =================================================================
 
-        // *** IMPORTANT ***
-        // update below too
-        console.log(userObj);
-        req.app.locals.currentUser = userObj;
+
+        // ************ IMPORTANT ************
+        // update req.app.locals.currentUser
+        req.app.locals.currentUser = {
+            _id: req.app.locals.currentUser._id,
+            email: req.body.email,
+            name: req.body.name,
+            username: req.body.username,
+            password: req.app.locals.currentUser.password
+        };
+        // ***********************************
+
 
         res.send({ 
             message: 'Account is updated!',
             user: userObj
         });
+
     } catch(err) {
         res.json({ message: err });
     }
 };
 
-export default updateSingleBike;
+export default userUpdate;

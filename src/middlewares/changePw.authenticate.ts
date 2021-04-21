@@ -2,8 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import auth from 'basic-auth';
 import bcryptjs from 'bcryptjs';
 
-const authenticateUser = async (req: Request, res: Response, next: NextFunction) => {
-    let message = null;
+const changePwAuthenticate = async (req: Request, res: Response, next: NextFunction) => {
+    let error = null;
 
     // Parse the user's credentials from the Authorization header.
     const credentials = auth(req);
@@ -21,26 +21,21 @@ const authenticateUser = async (req: Request, res: Response, next: NextFunction)
 
             if (authenticated) {
                 console.log(`Authentication successful for email: ${user.email}`);
-        
-                // Store the user on the Request object.
-                // req.currentUser = user;
                 console.log(user);
-                req.app.locals.currentUser = user;
             } else {
-                message = `Authentication failure for email: ${user.email}`;
+                error = `Authentication failure for email: ${user.email}`;
             }
         } else {
-            message = `User not found for email: ${credentials.name}`;
+            error = `User not found for email: ${credentials.name}`;
         }
     } else {
-        message = 'Auth header not found';
+        error = 'Auth header not found';
     }
     
-    if (message) {
-        console.warn(message);
+    if (error) {
+        console.warn(error);
         // Return a response with a 401 Unauthorized HTTP status code.
-        // res.status(401).json({ message: message });
-        return res.status(401).json({ message: message });
+        return res.status(401).json({ error: error });
     } else {
         // Or if user authentication succeeded... Call the next() method.
         next();
@@ -48,4 +43,4 @@ const authenticateUser = async (req: Request, res: Response, next: NextFunction)
 
 };
 
-export default authenticateUser;
+export default changePwAuthenticate;
