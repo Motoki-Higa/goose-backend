@@ -24,6 +24,7 @@ const changePw = async (req: Request, res: Response, next: NextFunction ) => {
         const result = await collection.updateOne(filter, updateDoc);
         console.log(`Password is changed`);
 
+        
         // ************ IMPORTANT ************
         // update req.app.locals.currentUser
         req.app.locals.currentUser = {

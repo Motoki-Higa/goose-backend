@@ -18,6 +18,7 @@ const deleteBike = async (req: Request, res: Response, next: NextFunction) => {
         const itemToDelete = collection.deleteOne({user_id: currentUserId, _id: ObjectID(bikeId)});
         // ==============================================================
 
+        
         // ===== Take care of deleting a file(such as image) from aws s3 ======
         const s3 = new aws.S3({
             secretAccessKey: process.env.S3_ACCESS_SECRET,
