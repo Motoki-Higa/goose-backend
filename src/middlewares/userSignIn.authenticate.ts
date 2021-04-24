@@ -20,10 +20,16 @@ const authenticateUser = async (req: Request, res: Response, next: NextFunction)
             const authenticated = bcryptjs.compareSync(credentials.pass, user.password);
 
             if (authenticated) {
-                console.log(`Authentication successful for email: ${user.email}`);
-        
-                // Store the user on the Request object.
-                req.app.locals.currentUser = user;
+
+                if (user.status === 'verified'){
+                    
+                    // Store the user on the Request object.
+                    req.app.locals.currentUser = user;
+                    console.log(`Authentication successful for email: ${user.email}`);
+
+                } else {
+                    error = `${user.email} is not verified yet`
+                }
             } else {
                 error = `Authentication failure for email: ${user.email}`;
             }

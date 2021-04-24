@@ -11,6 +11,7 @@ import profileImageUpload from '../middlewares/profileImageUpload';
 
 // controllers
 import userSignUp from '../controllers/user/userSignUp';
+import userVerify from '../controllers/user/userVerify';
 import userSignIn from '../controllers/user/userSignIn';
 import userUpdate from '../controllers/user/userUpdate';
 import userDelete from '../controllers/user/userDelete';
@@ -49,11 +50,13 @@ import saveToBookmark from '../controllers/bookmarks/saveToBookmark';
 import removeFromBookmark from '../controllers/bookmarks/removeFromBookmark';
 
 
-
-// Sign In : Route that returns the current authenticated user.
-router.get('/users', authenticateUser, userSignIn);
 // Sign Up : Route that create a new user
 router.post('/users', signUpValidator, userSignUp);
+// Sign Up : Route to verify email address
+router.get('/verify/:accesstoken', userVerify)
+// Sign In : Route that returns the current authenticated user.
+router.get('/users', authenticateUser, userSignIn);
+
 // account PUT (to edit)
 router.put('/users/:id', userEditValidator, userUpdate);
 // account DELETE
