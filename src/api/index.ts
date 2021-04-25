@@ -3,7 +3,9 @@ var router = Router();
 
 // middlewares & validators
 import signUpValidator from '../middlewares/userSignUp.validator';
+import requestTokenValidator from '../middlewares/requestToken.validator';
 import authenticateUser from '../middlewares/userSignIn.authenticate';
+import forgotPwValidator from '../middlewares/forgotPw.validator';
 import userEditValidator from '../middlewares/userEdit.validator';
 import bikeImageUpload from '../middlewares/bikeImageUpload';
 import itemImageUpload from '../middlewares/itemImageUpload';
@@ -12,6 +14,7 @@ import profileImageUpload from '../middlewares/profileImageUpload';
 // controllers
 import userSignUp from '../controllers/user/userSignUp';
 import userVerify from '../controllers/user/userVerify';
+import requestToken from '../controllers/user/requestToken';
 import userSignIn from '../controllers/user/userSignIn';
 import userUpdate from '../controllers/user/userUpdate';
 import userDelete from '../controllers/user/userDelete';
@@ -50,12 +53,17 @@ import saveToBookmark from '../controllers/bookmarks/saveToBookmark';
 import removeFromBookmark from '../controllers/bookmarks/removeFromBookmark';
 
 
-// Sign Up : Route that create a new user
+// Sign Up 
 router.post('/users', signUpValidator, userSignUp);
-// Sign Up : Route to verify email address
-router.get('/verify/:accesstoken', userVerify)
+// Verify email
+router.get('/verify/:token', userVerify);
+// Request token : used when verification link is expired
+router.post('/token', requestTokenValidator, requestToken);
 // Sign In : Route that returns the current authenticated user.
 router.get('/users', authenticateUser, userSignIn);
+// Forgot password
+// router.get('/forgotpassword', forgotPwValidator,  )
+
 
 // account PUT (to edit)
 router.put('/users/:id', userEditValidator, userUpdate);

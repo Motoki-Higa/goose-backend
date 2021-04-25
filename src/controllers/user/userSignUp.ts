@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import bcryptjs from 'bcryptjs';
-const jwt = require('jsonwebtoken');
 const generateAccessToken = require('./../../utils/generateAccessToken');
 const sendEmail = require('./../../utils/sendEmail');
 
@@ -9,8 +8,7 @@ const userSignUp = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email, name, username } = req.body;
         const userEmail = { email: email };
-        const accessToken = await generateAccessToken(userEmail); // this token expires in 10 min
-        const refreshToken = await jwt.sign(userEmail, process.env.REFRESH_TOKEN_SECRET);
+        const token = await generateAccessToken(userEmail); // this token expires in 10 min
 
         // get input field data from req.body and store in object
         const userObj: object = {
@@ -18,10 +16,7 @@ const userSignUp = async (req: Request, res: Response, next: NextFunction) => {
             name,
             username,
             password: bcryptjs.hashSync(req.body.password),
-            token: {
-                access: accessToken,
-                refresh: refreshToken
-            },
+            verificationToken: token,
             status: 'pending'
         };
 
@@ -54,11 +49,11 @@ const userSignUp = async (req: Request, res: Response, next: NextFunction) => {
         const from = 'motonx.dev@gmail.com';
         const subject = 'Goose app - Please verify your email address';
         const text = `
-            <h3>Thank you for signning up!</h3><br />
+            <h3>Thank you for signning up!</h3>
             <p>Please verify your email address.<br />
-            This verification expires in 10 minitue. You can re-send verification email if it's expired.</p><br />
-            <p>This is your access token: ${ accessToken }</p><br />
-            <a href="http://localhost:3000/verify/${ accessToken }">Verify my email address</a>
+            This verification expires in 10 minitue. <br />
+            You can re-send verification email if it's expired.</p>
+            <a href="http://localhost:3000/verify/${ token }">Verify my email address</a>
         `
         
         sendEmail(to, from, subject, text);
