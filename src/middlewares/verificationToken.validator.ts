@@ -2,7 +2,7 @@ import { check, validationResult } from 'express-validator';
 import { Request, Response, NextFunction } from 'express';
 
 // validate the signup input field with express-validator
-const forgotPwValidator = [
+const verificationTokenValidator = [
     check('email')
         .exists({ checkNull: true, checkFalsy: true })
         .toLowerCase()
@@ -16,13 +16,15 @@ const forgotPwValidator = [
                 throw new Error('Email not registered');
             }
 
-            if (user.status === 'pending'){
-                throw new Error('Email is not verified yet');
+            if (user.status === 'verified'){
+                throw new Error('Email is already verified');
             }
         }),
     (req: Request, res: Response, next: NextFunction) => {
         // extract error msg if any from nameValidator
         const errors = validationResult(req);
+
+        console.log(errors);
 
         if(!errors.isEmpty()){
             const errorMessages = errors.array().map((error: any) => error.msg);
@@ -34,4 +36,4 @@ const forgotPwValidator = [
     }
 ]
 
-export default forgotPwValidator;
+export default verificationTokenValidator;

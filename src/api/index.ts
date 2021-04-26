@@ -3,10 +3,11 @@ var router = Router();
 
 // middlewares & validators
 import signUpValidator from '../middlewares/userSignUp.validator';
-import authenticateAccessToken from '../middlewares/authenticateAccessToken';
-import requestTokenValidator from '../middlewares/requestToken.validator';
+import authenticateVerificationToken from '../middlewares/authenticateVerificationToken';
+import authenticateResetPwToken from '../middlewares/authenticateResetPwToken';
+import verificationTokenValidator from '../middlewares/verificationToken.validator';
 import authenticateUser from '../middlewares/userSignIn.authenticate';
-import forgotPwValidator from '../middlewares/forgotPw.validator';
+import resetPwValidator from '../middlewares/resetPw.validator';
 import userEditValidator from '../middlewares/userEdit.validator';
 import bikeImageUpload from '../middlewares/bikeImageUpload';
 import itemImageUpload from '../middlewares/itemImageUpload';
@@ -15,11 +16,13 @@ import profileImageUpload from '../middlewares/profileImageUpload';
 // controllers
 import userSignUp from '../controllers/user/userSignUp';
 import userVerify from '../controllers/user/userVerify';
-import requestToken from '../controllers/user/requestToken';
+import issueVerificationToken from '../controllers/user/issueVerificationToken';
+import issueResetPwToken from '../controllers/user/issueResetPwToken';
 import userSignIn from '../controllers/user/userSignIn';
 import userUpdate from '../controllers/user/userUpdate';
 import userDelete from '../controllers/user/userDelete';
 import changePw from '../controllers/user/changePw';
+import resetPw from '../controllers/user/resetPw';
 
 import feedAllBikes from '../controllers/feed/feedAllBikes';
 import feedSearch from '../controllers/feed/feedSearch';
@@ -56,14 +59,18 @@ import removeFromBookmark from '../controllers/bookmarks/removeFromBookmark';
 
 // Sign Up 
 router.post('/users', signUpValidator, userSignUp);
+// Re-send token : used when verification link is expired
+router.post('/users/verificationToken', verificationTokenValidator, issueVerificationToken);
 // Verify email
-router.get('/verify/:token', authenticateAccessToken, userVerify);
-// Request token : used when verification link is expired
-router.post('/token', requestTokenValidator, requestToken);
+router.get('/users/verify/:token', authenticateVerificationToken, userVerify);
+
 // Sign In : Route that returns the current authenticated user.
 router.get('/users', authenticateUser, userSignIn);
-// Forgot password
-// router.get('/forgotpassword', forgotPwValidator,  )
+
+// Request reset pw token
+router.put('/users/reset-password', resetPwValidator, issueResetPwToken);
+// Reset pw
+router.put('/reset-password/:token', authenticateResetPwToken, resetPw)
 
 
 // account PUT (to edit)

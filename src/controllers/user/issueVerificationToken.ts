@@ -1,17 +1,17 @@
 import { Request, Response, NextFunction } from 'express';
-const generateAccessToken = require('./../../utils/generateAccessToken');
+const generateToken = require('./../../utils/generateToken');
 const sendEmail = require('./../../utils/sendEmail');
 
 
-const requestToken = async (req: Request, res: Response, next: NextFunction) => {
+const issueVerificationToken = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email } = req.body;
         const userEmail = { email: email };
-        const token = await generateAccessToken(userEmail); // this token expires in 10 min
+        const token = await generateToken(userEmail, process.env.ACCESS_TOKEN_SECRET); // this token expires in 10 min
 
         // below two variables are sent to updataOne() function
         const filter = { email: email };
-        const updateDoc: object = {$set: { verificationToken: token } };
+        const updateDoc: object = { $set: { verificationToken: token } };
 
         // store values in database (users)
         const collection = req.app.locals.db.collection('users');
@@ -40,4 +40,4 @@ const requestToken = async (req: Request, res: Response, next: NextFunction) => 
     }
 };
 
-export default requestToken;
+export default issueVerificationToken;

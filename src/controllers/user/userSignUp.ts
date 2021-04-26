@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import bcryptjs from 'bcryptjs';
-const generateAccessToken = require('./../../utils/generateAccessToken');
+const generateToken = require('./../../utils/generateToken');
 const sendEmail = require('./../../utils/sendEmail');
 
 
@@ -8,7 +8,7 @@ const userSignUp = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email, name, username } = req.body;
         const userEmail = { email: email };
-        const token = await generateAccessToken(userEmail); // this token expires in 10 min
+        const token = await generateToken(userEmail, process.env.ACCESS_TOKEN_SECRET); // this token expires in 10 min
 
         // get input field data from req.body and store in object
         const userObj: object = {
@@ -17,6 +17,7 @@ const userSignUp = async (req: Request, res: Response, next: NextFunction) => {
             username,
             password: bcryptjs.hashSync(req.body.password),
             verificationToken: token,
+            resetPasswordToken: null,
             status: 'pending'
         };
 

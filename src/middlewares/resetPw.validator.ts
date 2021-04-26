@@ -1,8 +1,8 @@
 import { check, validationResult } from 'express-validator';
 import { Request, Response, NextFunction } from 'express';
 
-// validate the signup input field with express-validator
-const requestTokenValidator = [
+// validate the reset password form input field with express-validator
+const resetPwValidator = [
     check('email')
         .exists({ checkNull: true, checkFalsy: true })
         .toLowerCase()
@@ -16,15 +16,13 @@ const requestTokenValidator = [
                 throw new Error('Email not registered');
             }
 
-            if (user.status === 'verified'){
-                throw new Error('Email is already verified');
+            if (user.status === 'pending'){
+                throw new Error('Email is not verified yet');
             }
         }),
     (req: Request, res: Response, next: NextFunction) => {
         // extract error msg if any from nameValidator
         const errors = validationResult(req);
-
-        console.log(errors);
 
         if(!errors.isEmpty()){
             const errorMessages = errors.array().map((error: any) => error.msg);
@@ -36,4 +34,4 @@ const requestTokenValidator = [
     }
 ]
 
-export default requestTokenValidator;
+export default resetPwValidator;
