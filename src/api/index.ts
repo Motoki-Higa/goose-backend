@@ -3,6 +3,7 @@ var router = Router();
 
 // middlewares & validators
 import signUpValidator from '../middlewares/userSignUp.validator';
+import authenticateAccessToken from '../middlewares/authenticateAccessToken';
 import requestTokenValidator from '../middlewares/requestToken.validator';
 import authenticateUser from '../middlewares/userSignIn.authenticate';
 import forgotPwValidator from '../middlewares/forgotPw.validator';
@@ -56,7 +57,7 @@ import removeFromBookmark from '../controllers/bookmarks/removeFromBookmark';
 // Sign Up 
 router.post('/users', signUpValidator, userSignUp);
 // Verify email
-router.get('/verify/:token', userVerify);
+router.get('/verify/:token', authenticateAccessToken, userVerify);
 // Request token : used when verification link is expired
 router.post('/token', requestTokenValidator, requestToken);
 // Sign In : Route that returns the current authenticated user.
