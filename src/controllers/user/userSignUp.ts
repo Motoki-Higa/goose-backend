@@ -18,6 +18,7 @@ const userSignUp = async (req: Request, res: Response, next: NextFunction) => {
             password: bcryptjs.hashSync(req.body.password),
             verificationToken: token,
             resetPasswordToken: null,
+            emailChangeToken: null,
             status: 'pending'
         };
 

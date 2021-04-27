@@ -6,7 +6,7 @@ const userUpdate = async (req: Request, res: Response, next: NextFunction ) => {
         const userId = req.params.id;
         const userObj = {
             _id: req.app.locals.currentUser._id,
-            email: req.body.email,
+            email: req.app.locals.currentUser.email,
             name: req.body.name,
             username: req.body.username,
         }
@@ -43,7 +43,7 @@ const userUpdate = async (req: Request, res: Response, next: NextFunction ) => {
         // update req.app.locals.currentUser
         req.app.locals.currentUser = {
             _id: req.app.locals.currentUser._id,
-            email: req.body.email,
+            email: req.app.locals.currentUser.email,
             name: req.body.name,
             username: req.body.username,
             password: req.app.locals.currentUser.password

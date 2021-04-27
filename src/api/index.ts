@@ -9,6 +9,8 @@ import authenticateUser from '../middlewares/userSignIn.authenticate';
 import passwordResetValidator from '../middlewares/passwordReset.validator';
 import passwordResetTokenAuthenticate from '../middlewares/passwordResetToken.authenticate';
 import userEditValidator from '../middlewares/userEdit.validator';
+import emailChangeTokenValidator from '../middlewares/emailChangeToken.validator';
+import emailChangeTokenAuthenticate from '../middlewares/emailChangeToken.authenticate';
 import bikeImageUpload from '../middlewares/bikeImageUpload';
 import itemImageUpload from '../middlewares/itemImageUpload';
 import profileImageUpload from '../middlewares/profileImageUpload';
@@ -23,6 +25,8 @@ import userDelete from '../controllers/user/userDelete';
 import passwordChange from '../controllers/user/passwordChange';
 import passwordResetToken from '../controllers/user/passwordResetToken';
 import passwordReset from '../controllers/user/passwordReset';
+import emailChangeToken from '../controllers/user/emailChangeToken';
+import emailChange from '../controllers/user/emailChange';
 
 import feedAllBikes from '../controllers/feed/feedAllBikes';
 import feedSearch from '../controllers/feed/feedSearch';
@@ -59,16 +63,14 @@ import removeFromBookmark from '../controllers/bookmarks/removeFromBookmark';
 
 // Sign Up 
 router.post('/users', signUpValidator, userSignUp);
-// Email verify request : used when verification link is expired
-router.put('/email/verify/request', emailVerifyTokenValidator, emailVerifyToken);
-// Email verify
-router.get('/email/verify/:token', emailVerifyTokenAuthenticate, emailVerify);
-
 // Sign In : Route that returns the current authenticated user.
 router.get('/users', authenticateUser, userSignIn);
-
+// Email verify request : used when verification link is expired
+router.put('/users/email/verify/request', emailVerifyTokenValidator, emailVerifyToken);
+// Email verify
+router.get('/users/email/verify/:token', emailVerifyTokenAuthenticate, emailVerify);
 // Password reset request
-router.put('/users/password/reset', passwordResetValidator, passwordResetToken);
+router.put('/users/password/reset/request', passwordResetValidator, passwordResetToken);
 // Password reset
 router.put('/users/password/reset/:token', passwordResetTokenAuthenticate, passwordReset)
 
@@ -77,6 +79,10 @@ router.put('/users/password/reset/:token', passwordResetTokenAuthenticate, passw
 router.put('/users/:id', userEditValidator, userUpdate);
 // account DELETE
 router.delete('/users/:id', authenticateUser, userDelete);
+// Email change request
+router.put('/users/:id/email/change/request', emailChangeTokenValidator, emailChangeToken);
+// Email change
+router.put('/users/:id/email/change/:token', emailChangeTokenAuthenticate, emailChange);
 // password PUT (to change)
 router.put('/users/:id/password/change', authenticateUser, passwordChange);
 
