@@ -3,7 +3,7 @@ const generateToken = require('./../../utils/generateToken');
 const sendEmail = require('./../../utils/sendEmail');
 
 
-const issueResetPwToken = async (req: Request, res: Response, next: NextFunction) => {
+const passwordResetToken = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email } = req.body;
         const userEmail = { email: email };
@@ -26,7 +26,7 @@ const issueResetPwToken = async (req: Request, res: Response, next: NextFunction
             <h3>Reset password</h3>
             <p>This reset password link expires in 10 minitue. <br />
             You can request it again if it's expired.</p>
-            <a href="http://localhost:3000/reset-password/${ token }">Reset password from here</a>
+            <a href="http://localhost:3000/password/reset/${ token }">Reset password from here</a>
         `
         
         sendEmail(to, from, subject, text);
@@ -39,4 +39,4 @@ const issueResetPwToken = async (req: Request, res: Response, next: NextFunction
     }
 };
 
-export default issueResetPwToken;
+export default passwordResetToken;

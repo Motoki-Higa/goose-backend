@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-const userVerify = async (req: Request, res: Response, next: NextFunction) => {
+const emailVerify = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const token = req.params.token;
         const collection = await req.app.locals.db.collection('users');
@@ -44,4 +44,4 @@ const userVerify = async (req: Request, res: Response, next: NextFunction) => {
 //     }
 // };
 
-export default userVerify;
+export default emailVerify;

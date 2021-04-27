@@ -2,7 +2,7 @@ export {}; // this fixes the bug of typescript says 'can not redeclare block-sco
 import { Request, Response, NextFunction } from 'express';
 const jwt = require('jsonwebtoken');
 
-function authenticateResetPwToken(req: Request, res: Response, next: NextFunction){
+function passwordResetTokenAuthenticate(req: Request, res: Response, next: NextFunction){
     const token = req.params.token;
     if (token == null){
         return res.status(404).send({ error: "Verification error" });
@@ -17,4 +17,4 @@ function authenticateResetPwToken(req: Request, res: Response, next: NextFunctio
     });
 }
 
-export default authenticateResetPwToken;
+export default passwordResetTokenAuthenticate;

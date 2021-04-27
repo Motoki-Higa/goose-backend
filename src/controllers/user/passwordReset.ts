@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import bcryptjs from 'bcryptjs';
 
-const resetPw = async (req: Request, res: Response, next: NextFunction ) => {
+const passwordReset = async (req: Request, res: Response, next: NextFunction ) => {
     try {
         const resetPasswordToken = req.params.token;
 
@@ -25,4 +25,4 @@ const resetPw = async (req: Request, res: Response, next: NextFunction ) => {
     }
 };
 
-export default resetPw;
+export default passwordReset;

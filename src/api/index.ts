@@ -3,11 +3,11 @@ var router = Router();
 
 // middlewares & validators
 import signUpValidator from '../middlewares/userSignUp.validator';
-import authenticateVerificationToken from '../middlewares/authenticateVerificationToken';
-import authenticateResetPwToken from '../middlewares/authenticateResetPwToken';
-import verificationTokenValidator from '../middlewares/verificationToken.validator';
+import emailVerifyTokenValidator from '../middlewares/emailVerifyToken.validator';
+import emailVerifyTokenAuthenticate from '../middlewares/emailVerifyToken.authenticate';
 import authenticateUser from '../middlewares/userSignIn.authenticate';
-import resetPwValidator from '../middlewares/resetPw.validator';
+import passwordResetValidator from '../middlewares/passwordReset.validator';
+import passwordResetTokenAuthenticate from '../middlewares/passwordResetToken.authenticate';
 import userEditValidator from '../middlewares/userEdit.validator';
 import bikeImageUpload from '../middlewares/bikeImageUpload';
 import itemImageUpload from '../middlewares/itemImageUpload';
@@ -15,14 +15,14 @@ import profileImageUpload from '../middlewares/profileImageUpload';
 
 // controllers
 import userSignUp from '../controllers/user/userSignUp';
-import userVerify from '../controllers/user/userVerify';
-import issueVerificationToken from '../controllers/user/issueVerificationToken';
-import issueResetPwToken from '../controllers/user/issueResetPwToken';
+import emailVerify from '../controllers/user/emailVerify';
+import emailVerifyToken from '../controllers/user/emailVerifyToken';
 import userSignIn from '../controllers/user/userSignIn';
 import userUpdate from '../controllers/user/userUpdate';
 import userDelete from '../controllers/user/userDelete';
-import changePw from '../controllers/user/changePw';
-import resetPw from '../controllers/user/resetPw';
+import passwordChange from '../controllers/user/passwordChange';
+import passwordResetToken from '../controllers/user/passwordResetToken';
+import passwordReset from '../controllers/user/passwordReset';
 
 import feedAllBikes from '../controllers/feed/feedAllBikes';
 import feedSearch from '../controllers/feed/feedSearch';
@@ -59,18 +59,18 @@ import removeFromBookmark from '../controllers/bookmarks/removeFromBookmark';
 
 // Sign Up 
 router.post('/users', signUpValidator, userSignUp);
-// Re-send token : used when verification link is expired
-router.post('/users/verificationToken', verificationTokenValidator, issueVerificationToken);
-// Verify email
-router.get('/users/verify/:token', authenticateVerificationToken, userVerify);
+// Email verify request : used when verification link is expired
+router.put('/email/verify/request', emailVerifyTokenValidator, emailVerifyToken);
+// Email verify
+router.get('/email/verify/:token', emailVerifyTokenAuthenticate, emailVerify);
 
 // Sign In : Route that returns the current authenticated user.
 router.get('/users', authenticateUser, userSignIn);
 
-// Request reset pw token
-router.put('/users/reset-password', resetPwValidator, issueResetPwToken);
-// Reset pw
-router.put('/reset-password/:token', authenticateResetPwToken, resetPw)
+// Password reset request
+router.put('/users/password/reset', passwordResetValidator, passwordResetToken);
+// Password reset
+router.put('/users/password/reset/:token', passwordResetTokenAuthenticate, passwordReset)
 
 
 // account PUT (to edit)
@@ -78,7 +78,7 @@ router.put('/users/:id', userEditValidator, userUpdate);
 // account DELETE
 router.delete('/users/:id', authenticateUser, userDelete);
 // password PUT (to change)
-router.put('/users/:id/password/change', authenticateUser, changePw);
+router.put('/users/:id/password/change', authenticateUser, passwordChange);
 
 
 // feed GET

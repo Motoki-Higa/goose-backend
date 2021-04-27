@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 const { ObjectID } = require('mongodb');
 import bcryptjs from 'bcryptjs';
 
-const changePw = async (req: Request, res: Response, next: NextFunction ) => {
+const passwordChange = async (req: Request, res: Response, next: NextFunction ) => {
     try {
         const userId = req.params.id;
         const userObj = {
@@ -46,4 +46,4 @@ const changePw = async (req: Request, res: Response, next: NextFunction ) => {
     }
 };
 
-export default changePw;
+export default passwordChange;
