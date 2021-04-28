@@ -3,24 +3,6 @@ import { Request, Response, NextFunction } from 'express';
 
 // validate the signup input field with express-validator
 const userEditValidator = [
-    // check('email')
-    //     .exists({ checkNull: true, checkFalsy: true })
-    //     .toLowerCase()
-    //     .withMessage('Please provide a value for "email"')
-    //     .custom(async (value, {req}) => { 
-    //         // this custom function checks if email is already in use or not
-
-    //         const userId = req.app.locals.currentUser._id;
-    //         const collection = req.app.locals.db.collection('users');
-    //         const user = await collection.findOne({email: value});
-                  
-    //         if (user) { 
-    //             // if the user found was Not the logged in user, then throw error
-    //             if (String(user._id) !== String(userId)){
-    //                 throw new Error('Email already in use') 
-    //             }
-    //         } 
-    //     }),
     check('name')
         .exists({ checkNull: true, checkFalsy: true })
         .withMessage('Please provide a value for "name"'),

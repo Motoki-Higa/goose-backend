@@ -11,9 +11,9 @@ import passwordResetTokenAuthenticate from '../middlewares/passwordResetToken.au
 import userEditValidator from '../middlewares/userEdit.validator';
 import emailChangeTokenValidator from '../middlewares/emailChangeToken.validator';
 import emailChangeTokenAuthenticate from '../middlewares/emailChangeToken.authenticate';
-import bikeImageUpload from '../middlewares/bikeImageUpload';
-import itemImageUpload from '../middlewares/itemImageUpload';
-import profileImageUpload from '../middlewares/profileImageUpload';
+import imageUploadBike from '../middlewares/imageUpload.bike';
+import imageUploadItem from '../middlewares/imageUpload.item';
+import imageUploadProfile from '../middlewares/imageUpload.profile';
 
 // controllers
 import userSignUp from '../controllers/user/userSignUp';
@@ -96,11 +96,11 @@ router.get('/feed/:id', feedSingleBike);
 
 
 // bikes POST
-router.post('/bikes', bikeImageUpload.array('image', 5), postBike);
+router.post('/bikes', imageUploadBike, postBike);
 // bikes DELETE
 router.delete('/bikes/:id', deleteBike);
 // bikes/:id/edit POST (to update)
-router.post('/bikes/:id/edit', bikeImageUpload.array('image', 5), updateSingleBike);
+router.post('/bikes/:id/edit', imageUploadBike, updateSingleBike);
 // bikes/:id/edit/image POST (to delete)
 router.post('/bikes/:id/edit/image', deleteSingleBikeImage);
 // bikes GET (My bikes *publicity true AND false)
@@ -116,11 +116,11 @@ router.get('/:userId/bikes/:id', getSingleBike);
 
 
 // items POST
-router.post('/items', itemImageUpload.array('image', 5), postItem);
+router.post('/items', imageUploadItem, postItem);
 // items/:id DELETE
 router.delete('/items/:id', deleteItem);
 // items/:id/edit POST (to update)
-router.post('/items/:id/edit', itemImageUpload.array('image', 5), updateSingleItem);
+router.post('/items/:id/edit', imageUploadItem, updateSingleItem);
 // items/:id/edit/image POST (to delete)
 router.post('/items/:id/edit/image', deleteSingleItemImage);
 // items GET
@@ -150,8 +150,8 @@ router.get('/profile/:username', getProfileByUsername);
 // profile GET (this route is used for finding a user through items such as bike or item)
 router.get('/profile/userId/:userId', getProfileById);
 // profile update POST 
-router.post('/profile/:id/edit', profileImageUpload.single('image'), updateProfile);
-// profile image POST (to delete)
+router.post('/profile/:id/edit', imageUploadProfile, updateProfile);
+// profile image DELETE (to delete)
 router.delete('/profile/:userId/image/:imageKey', deleteProfileImage);
 
 
