@@ -12,7 +12,7 @@ function emailChangeTokenAuthenticate(req: Request, res: Response, next: NextFun
     // since call back is supplied, decoded payload will be returned to 'user'
     jwt.verify(token, process.env.EMAIL_CHANGE_TOKEN_SECRET, (err: any, user: any) => {
         if (err){
-            return res.status(403).send({ error: "This link is expired already. Please request it again." });
+            return res.status(403).send({ error: "The verification link is expired" });
         }
         console.log(user.email);
         req.app.locals.newEmail = user.email;
