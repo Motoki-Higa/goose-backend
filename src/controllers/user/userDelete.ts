@@ -25,22 +25,22 @@ const userDelete = async (req: Request, res: Response, next: NextFunction ) => {
         })
 
         // delete bike object from database
-        const deletedBikes = await bikeCollection.deleteOne({user_id: currentUserId});
+        const deletedBikes = await bikeCollection.deleteMany({user_id: currentUserId});
         if (deletedBikes.deletedCount > 0){
-            console.log(`User's bikes are deleted`);
-        }
+            console.log(`User's ${ deletedBikes.deletedCount } bike(s) are deleted`);
 
-        // delete files from aws s3
-        const bikeDeleteRequest: any = { 
-            Bucket: process.env.S3_BUCKET_GOOSE_BIKES, 
-            Delete: {
-                Objects: bikeImageKeyArr
-            }
-        };
-        s3.deleteObjects(bikeDeleteRequest, (err: AWSError, data: any) => {
-            if (err) console.log(err, err.stack);  // error
-            else     console.log();                 // deleted
-        });
+            // delete files from aws s3
+            const bikeDeleteRequest: any = { 
+                Bucket: process.env.S3_BUCKET_GOOSE_BIKES, 
+                Delete: {
+                    Objects: bikeImageKeyArr
+                }
+            };
+            s3.deleteObjects(bikeDeleteRequest, (err: AWSError, data: any) => {
+                if (err) console.log(err, err.stack);  // error
+                else     console.log();                 // deleted
+            });
+        }
         // =======================================
 
 
@@ -57,22 +57,22 @@ const userDelete = async (req: Request, res: Response, next: NextFunction ) => {
         })
 
         // delete item object from database
-        const deletedItems = await itemCollection.deleteOne({user_id: currentUserId});
+        const deletedItems = await itemCollection.deleteMany({user_id: currentUserId});
         if (deletedItems.deletedCount > 0){
-            console.log(`User's items are deleted`);
-        }
+            console.log(`User's ${ deletedItems.deletedCount } item(s) are deleted`);
 
-        // delete files from aws s3
-        const itemDeleteRequest: any = { 
-            Bucket: process.env.S3_BUCKET_GOOSE_ITEMS, 
-            Delete: {
-                Objects: itemImageKeyArr
-            }
-        };
-        s3.deleteObjects(itemDeleteRequest, (err: AWSError, data: any) => {
-            if (err) console.log(err, err.stack);  // error
-            else     console.log();                 // deleted
-        });
+            // delete files from aws s3
+            const itemDeleteRequest: any = { 
+                Bucket: process.env.S3_BUCKET_GOOSE_ITEMS, 
+                Delete: {
+                    Objects: itemImageKeyArr
+                }
+            };
+            s3.deleteObjects(itemDeleteRequest, (err: AWSError, data: any) => {
+                if (err) console.log(err, err.stack);  // error
+                else     console.log();                 // deleted
+            });
+        }
         // =======================================
 
 
@@ -88,17 +88,19 @@ const userDelete = async (req: Request, res: Response, next: NextFunction ) => {
         }
 
         // delete files from aws s3
-        const profileDeleteRequest: any = { 
-            Bucket: process.env.S3_BUCKET_GOOSE_PROFILES, 
-            Delete: {
-                Objects: [{'Key': profileImageKey}]
-            }
-            
-        };
-        s3.deleteObjects(profileDeleteRequest, (err: AWSError, data: any) => {
-            if (err) console.log(err, err.stack);  // error
-            else     console.log();                 // deleted
-        });
+        if (profile.image.key){
+            const profileDeleteRequest: any = { 
+                Bucket: process.env.S3_BUCKET_GOOSE_PROFILES, 
+                Delete: {
+                    Objects: [{'Key': profileImageKey}]
+                }
+                
+            };
+            s3.deleteObjects(profileDeleteRequest, (err: AWSError, data: any) => {
+                if (err) console.log(err, err.stack);  // error
+                else     console.log();                 // deleted
+            });
+        }
         // =======================================
 
 

@@ -25,7 +25,7 @@ const emailVerifyToken = async (req: Request, res: Response, next: NextFunction)
         const text = `
             <h3>Thank you for signning up!</h3>
             <p>Please verify your email address.<br />
-            This verification expires in 10 minitue. <br />
+            Below verification link will expire in 10 minitue. <br />
             You can re-send verification email if it's expired.</p>
             <a href="http://localhost:3000/email/verify/${ token }">Verify my email address</a>
         `
