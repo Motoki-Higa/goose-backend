@@ -49,16 +49,21 @@ import getAllItems from '../controllers/items/getAllItems';
 import itemsSearch from '../controllers/items/itemsSearch';
 import getSingleItem from '../controllers/items/getSingleItem';
 
-import getProfileById from '../controllers/profiles/getProfileById';
-import getProfileByUsername from '../controllers/profiles/getProfileByUsername';
-import updateProfile from '../controllers/profiles/updateProfile';
-import deleteProfileImage from '../controllers/profiles/deleteProfileImage';
-
 import getBookmark from '../controllers/bookmarks/getBookmark';
 import getSavedBikes from '../controllers/bookmarks/getSavedBikes';
 import bookmarkSearch from '../controllers/bookmarks/bookmarkSearch';
 import saveToBookmark from '../controllers/bookmarks/saveToBookmark';
 import removeFromBookmark from '../controllers/bookmarks/removeFromBookmark';
+
+import getFollowing from '../controllers/following/getFollowing';
+import getAllFollowingUsers from '../controllers/following/getAllFollowingUsers';
+import follow from '../controllers/following/follow';
+import unFollow from '../controllers/following/unFollow';
+
+import getProfileById from '../controllers/profiles/getProfileById';
+import getProfileByUsername from '../controllers/profiles/getProfileByUsername';
+import updateProfile from '../controllers/profiles/updateProfile';
+import deleteProfileImage from '../controllers/profiles/deleteProfileImage';
 
 
 // Sign Up 
@@ -139,8 +144,18 @@ router.delete('/bookmark/bikes/:id', removeFromBookmark);
 router.get('/:userId/bookmark', getBookmark);
 // get all bookmark(bikes)
 router.post('/:userId/bookmark/bikes', getSavedBikes);
-// get all bookmark(bikes)
+// search bookmark(bikes)
 router.post('/:userId/bookmark/bikes/search', bookmarkSearch('bikes'));
+
+
+// get all following users
+router.get('/following', getFollowing);
+// get all bookmark(bikes)
+router.post('/following', getAllFollowingUsers);
+// follow
+router.post('/following/:id', follow);
+// unfollow
+router.delete('/following/:id', unFollow);
 
 
 // profile POST
