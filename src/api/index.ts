@@ -41,6 +41,10 @@ import getAllBikes from '../controllers/bikes/getAllBikes';
 import bikesSearch from '../controllers/bikes/bikesSearch';
 import getSingleBike from '../controllers/bikes/getSingleBike';
 
+import postParts from '../controllers/parts/postParts';
+import editParts from '../controllers/parts/editParts';
+import deleteParts from '../controllers/parts/deleteParts';
+
 import postItem from '../controllers/items/postItem';
 import deleteItem from '../controllers/items/deleteItem';
 import updateSingleItem from '../controllers/items/updateSingleItem';
@@ -118,6 +122,14 @@ router.get('/:userId/myBikes/search', bikesSearch('bikes'));
 router.get('/:userId/bikes/search', bikesSearch('bikes'));
 // bike(single) GET
 router.get('/:userId/bikes/:id', getSingleBike);
+
+
+// bike parts POST
+router.post('/bikes/:id/parts', postParts);
+// bike parts PUT (edit)
+router.put('/bikes/:id/parts', editParts);
+// bike parts DELETE
+router.delete('/bikes/:id/parts', deleteParts);
 
 
 // items POST
