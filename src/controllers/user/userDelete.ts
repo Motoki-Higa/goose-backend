@@ -84,7 +84,7 @@ const userDelete = async (req: Request, res: Response, next: NextFunction ) => {
         // delete user object from database
         const deletedProfile = await profileCollection.deleteOne({user_id: currentUserId});
         if (deletedProfile.deletedCount > 0){
-            console.log(`User's profile is deleted`);
+            console.log(`User's profile data is deleted`);
         }
 
         // delete files from aws s3
@@ -104,15 +104,37 @@ const userDelete = async (req: Request, res: Response, next: NextFunction ) => {
         // =======================================
 
 
-        // ========= delete user's bookmark =========
-        const bookmarkCollection = req.app.locals.db.collection('bookmark');
+        // ============== delete user's bookmark data ==============
+        const bookmarkCollection = req.app.locals.db.collection('bookmarks');
 
         // delete user object from database
         const deletedBookmark = await bookmarkCollection.deleteOne({user_id: currentUserId});
         if (deletedBookmark.deletedCount > 0){
-            console.log(`User's bookmark is deleted`);
+            console.log(`User's bookmark data is deleted`);
         }
-        // =======================================
+        // ========================================================
+
+
+        // ============== delete user's following data ==============
+        const followingCollection = req.app.locals.db.collection('following');
+
+        // delete user object from database
+        const deletedFollowing = await followingCollection.deleteOne({user_id: currentUserId});
+        if (deletedFollowing.deletedCount > 0){
+            console.log(`User's following data is deleted`);
+        }
+        // ===========================================================
+
+        // ============= delete a user from others following list ==============
+        // create a document that unsets the selected image
+        const updateDoc = {
+            $pull: { following_ids: currentUserId.toString() },
+        };
+        const result = await followingCollection.updateMany({}, updateDoc);
+        if ( result.modifiedCount > 0){
+            console.log(`${result.modifiedCount} were modified`);
+        }
+        // ==============================================================
         
 
         /***** Delete MAIN database from user collection *****/
