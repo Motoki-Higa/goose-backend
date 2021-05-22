@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./src/bin/www.ts",
+    "start": "ts-node ./src/bin/www.ts",
     "dev": "nodemon ./src/bin/www.ts",
     "build": "tsc -p ."
   },
