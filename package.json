@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "ts-node ./src/bin/www.ts",
+    "start": "ts-node --max_old_space_size=4096 ./src/bin/www.ts",
     "dev": "nodemon ./src/bin/www.ts",
     "build": "tsc -p ."
   },
