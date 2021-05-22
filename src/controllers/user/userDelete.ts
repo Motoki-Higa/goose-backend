@@ -43,6 +43,7 @@ const userDelete = async (req: Request, res: Response, next: NextFunction ) => {
         }
         // =======================================
 
+        
 
         // ========= delete user's items =========
         const itemCollection = req.app.locals.db.collection('items');
@@ -76,6 +77,7 @@ const userDelete = async (req: Request, res: Response, next: NextFunction ) => {
         // =======================================
 
 
+
         // ========= delete user's profile =========
         const profileCollection = req.app.locals.db.collection('profiles');
         const profile = await profileCollection.findOne({user_id: currentUserId});
@@ -104,6 +106,7 @@ const userDelete = async (req: Request, res: Response, next: NextFunction ) => {
         // =======================================
 
 
+
         // ============== delete user's bookmark data ==============
         const bookmarkCollection = req.app.locals.db.collection('bookmarks');
 
@@ -113,6 +116,19 @@ const userDelete = async (req: Request, res: Response, next: NextFunction ) => {
             console.log(`User's bookmark data is deleted`);
         }
         // ========================================================
+
+        // ============== delete bikes from others bookmark list ==============
+        // this array will be used to delete users bikes from other users bookmark list
+        const bikeIds = bikes.map( (bike: any) => bike._id.toString());
+        const updateBookmarkDoc = {
+            $pullAll: { bike_ids: bikeIds },
+        };
+        const updatedBookmarks = await bookmarkCollection.updateMany({}, updateBookmarkDoc);
+        if ( updatedBookmarks.modifiedCount > 0){
+            console.log(`${updatedBookmarks.modifiedCount} user's bookmark list(s) are updated`);
+        }
+        // ====================================================================
+
 
 
         // ============== delete user's following data ==============
@@ -126,16 +142,17 @@ const userDelete = async (req: Request, res: Response, next: NextFunction ) => {
         // ===========================================================
 
         // ============= delete a user from others following list ==============
-        // create a document that unsets the selected image
+        // create a document that pulls the selected image
         const updateDoc = {
             $pull: { following_ids: currentUserId.toString() },
         };
         const result = await followingCollection.updateMany({}, updateDoc);
         if ( result.modifiedCount > 0){
-            console.log(`${result.modifiedCount} were modified`);
+            console.log(`${result.modifiedCount} user's following list(s) are updated`);
         }
-        // ==============================================================
+        // ====================================================================
         
+
 
         /***** Delete MAIN database from user collection *****/
         const userCollection = req.app.locals.db.collection('users');
