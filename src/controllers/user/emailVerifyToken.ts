@@ -27,7 +27,7 @@ const emailVerifyToken = async (req: Request, res: Response, next: NextFunction)
             <p>Please verify your email address.<br />
             Below verification link will expire in 10 minitue. <br />
             You can re-send verification email if it's expired.</p>
-            <a href="http://localhost:3000/email/verify/${ token }">Verify my email address</a>
+            <a href="${ process.env.SITE_URL }/email/verify/${ token }">Verify my email address</a>
         `
         
         sendEmail(to, from, subject, text);

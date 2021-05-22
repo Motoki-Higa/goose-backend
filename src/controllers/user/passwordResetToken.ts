@@ -26,7 +26,7 @@ const passwordResetToken = async (req: Request, res: Response, next: NextFunctio
             <h3>Reset password</h3>
             <p>This reset password link expires in 10 minitue. <br />
             You can request it again if it's expired.</p>
-            <a href="http://localhost:3000/password/reset/${ token }">Reset password from here</a>
+            <a href="${ process.env.SITE_URL }/password/reset/${ token }">Reset password from here</a>
         `
         
         sendEmail(to, from, subject, text);

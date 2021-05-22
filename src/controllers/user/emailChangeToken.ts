@@ -42,7 +42,7 @@ const emailChangeToken = async (req: Request, res: Response, next: NextFunction)
             <p>New email address: ${ newEmail }</p>
             <p>The link below is valid for 10 minitue. <br />
             Please request it again if it's expired.</p>
-            <a href="http://localhost:3000/email/change/${ token }">Verify new email</a>
+            <a href="${ process.env.SITE_URL }/email/change/${ token }">Verify new email</a>
         `
         
         sendEmail(to_02, from_02, subject_02, text_02);
