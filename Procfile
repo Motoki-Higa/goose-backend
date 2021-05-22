@@ -1,1 +1,1 @@
-web: ts-node --max_old_space_size=4096 ./src/bin/www.ts
+web: ts-node ./src/bin/www.ts
