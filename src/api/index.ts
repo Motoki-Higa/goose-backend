@@ -70,6 +70,12 @@ import updateProfile from '../controllers/profiles/updateProfile';
 import deleteProfileImage from '../controllers/profiles/deleteProfileImage';
 
 
+router.get('/', function(req, res, next) {
+    console.log('hey')
+    res.render('index', { title: 'WISHMAN' });
+});
+
+
 // Sign Up 
 router.post('/users', signUpValidator, userSignUp);
 // Sign In : Route that returns the current authenticated user.
