@@ -27,6 +27,7 @@ MongoClient.connect(uri, { useUnifiedTopology: true }, async (err, client) => {
 // =========================================================
 
 // import routes
+import indexRouter from './index';
 import apiUsers from './api';
 
 var app = express();
@@ -44,6 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 // define routes
+app.use('/', indexRouter);
 app.use('/api', apiUsers);
 
 // catch 404 and forward to error handler
