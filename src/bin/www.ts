@@ -5,9 +5,9 @@
  */
 
 import app from '../app';
-import Debug from "debug";
-const debug = Debug('goose-backend:server');
-// var debug = require('debug')('goose-backend:server');
+// import Debug from "debug";
+// const debug = Debug('goose-backend:server');
+var debug = require('debug')('goose-backend:server');
 var http = require('http');
 
 /**
