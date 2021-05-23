@@ -22,11 +22,6 @@ Make sure you have installed all of the following prerequisites on your developm
 - [AWS S3](https://aws.amazon.com/s3/) - FS
 - [TypeScript.js](https://www.npmjs.com/package/typescript)
 
-#### Key packages
-
-- [express-validator](https://www.npmjs.com/package/express-validator)
-- [bcrypt.js](https://www.npmjs.com/package/bcryptjs)
-- [basic-auth](https://www.npmjs.com/package/basic-auth)
 
 ### Installing a project
 
