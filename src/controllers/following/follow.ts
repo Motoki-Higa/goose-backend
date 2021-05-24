@@ -30,13 +30,13 @@ const follow = async (req: Request, res: Response, next: NextFunction) => {
             });
         } 
         else {
-            const followingObj = {
+            const obj = {
                 user_id: userId,
                 following_ids: [followingId]
             }
 
             // create a new bookmark obj
-            const result = await collection.insertOne(followingObj);
+            const result = await collection.insertOne(obj);
             console.log(`${result.insertedCount} documents were inserted with the _id: ${result.insertedId}`);
             res.send({
                 message: 'First following user: ' + req.params.id + ' is saved!',

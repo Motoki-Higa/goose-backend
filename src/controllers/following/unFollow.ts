@@ -5,7 +5,7 @@ const unFollow = async (req: Request, res: Response, next: NextFunction) => {
         const userId = req.app.locals.currentUser._id;
         const followingId = req.params.id;
         const collection = req.app.locals.db.collection('following');
-        const followingObj = await collection.findOne({user_id: userId});
+        // const followingObj = await collection.findOne({user_id: userId});
 
         const filter = { user_id: userId };
         const updateDoc = { 
