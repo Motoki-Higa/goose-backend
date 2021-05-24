@@ -5,17 +5,16 @@ const { ObjectID } = require('mongodb');
 
 const deleteBike = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const currentUserId = req.app.locals.currentUser._id;
         const bikeId = req.params.id;
         const collection = req.app.locals.db.collection('bikes');
-        const item = await collection.findOne({user_id: currentUserId, _id: ObjectID(bikeId)});
+        const item = await collection.findOne({_id: ObjectID(bikeId)});
         const imageKeys = item.images.map((image: { key: string; }) => { 
             return { 'Key': image.key } 
         });
 
 
         // ===== Take care of deleting an item from database ======
-        const itemToDelete = collection.deleteOne({user_id: currentUserId, _id: ObjectID(bikeId)});
+        const itemToDelete = collection.deleteOne({_id: ObjectID(bikeId)});
         // ==============================================================
 
         

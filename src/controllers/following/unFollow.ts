@@ -1,13 +1,14 @@
 import {Request, Response, NextFunction} from 'express';
+const { ObjectID } = require('mongodb');
 
 const unFollow = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const userId = req.app.locals.currentUser._id;
+        const userId = req.params.userId;
         const followingId = req.params.id;
         const collection = req.app.locals.db.collection('following');
         // const followingObj = await collection.findOne({user_id: userId});
 
-        const filter = { user_id: userId };
+        const filter = { user_id: ObjectID(userId) };
         const updateDoc = { 
             $pull: { 
                 following_ids: followingId  

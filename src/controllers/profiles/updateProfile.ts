@@ -14,7 +14,7 @@ const updateProfile = async (req: Request, res: Response, next: NextFunction ) =
 
         // ======== Take care of updating database =========
         // create a filter for a bike to update
-        const filter = { _id: ObjectID(profileId), user_id: req.app.locals.currentUser._id };
+        const filter = { _id: ObjectID(profileId) };
         // create a document that unsets the selected image
         let updateDoc;
 

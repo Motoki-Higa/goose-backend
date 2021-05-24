@@ -11,25 +11,21 @@ const emailChange = async (req: Request, res: Response, next: NextFunction) => {
         if (!user){
             res.status(404).send({ error: "User not found" });
         }
-
-        const userObj = {
-            _id: req.app.locals.currentUser._id,
-            email: newEmail,
-            name: req.app.locals.currentUser.name,
-            username: req.app.locals.currentUser.username,
-        }
   
         const updateDoc = { $set: { email: newEmail } };
-        await collection.updateOne(filter, updateDoc)
+
+        // findOneAndUpdate() returns updated object *{returnOriginal: false} parameter is necessary
+        let data = await collection.findOneAndUpdate(filter, updateDoc, { returnOriginal: false }); 
+
         console.log(`Email is now changed to ${ newEmail }`);
 
+        const userObj = {
+            _id: data.value._id,
+            email: data.value.email,
+            name: data.value.name,
+            username: data.value.username,
+        }
 
-        // ************ IMPORTANT ************
-        // update req.app.locals.currentUser
-        req.app.locals.currentUser.email = newEmail;
-        // ***********************************
-
-        
         res.send({ 
             message: `Email is now changed to ${ newEmail }`,
             user: userObj

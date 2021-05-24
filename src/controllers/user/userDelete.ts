@@ -4,7 +4,7 @@ const { ObjectID } = require('mongodb');
 
 const userDelete = async (req: Request, res: Response, next: NextFunction ) => {
     try {
-        const currentUserId = req.app.locals.currentUser._id;
+        const currentUserId = req.params.id;
         
         const s3 = new aws.S3({
             secretAccessKey: process.env.S3_ACCESS_SECRET,

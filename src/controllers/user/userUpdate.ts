@@ -3,25 +3,24 @@ const { ObjectID } = require('mongodb');
 
 const userUpdate = async (req: Request, res: Response, next: NextFunction ) => {
     try {
-        const userId = req.params.id;
-        const userObj = {
-            _id: req.app.locals.currentUser._id,
-            email: req.app.locals.currentUser.email,
-            name: req.body.name,
-            username: req.body.username,
-        }
+        const userId = req.body._id;
 
         // ================ update user in users collection =================
         // filter to find user
         const filter = { _id: ObjectID(userId) };
         // get input field data from req.body and store in object
-        const user: object = { $set: userObj};
+        const user: object = { $set: {
+            name: req.body.name,
+            username: req.body.username,
+        }};
 
         // store values in database (users)
         const collection = req.app.locals.db.collection('users');
-        const result = await collection.updateOne(filter, user);
+        // findOneAndUpdate() returns updated object *{returnOriginal: false} parameter is necessary
+        const result = await collection.findOneAndUpdate(filter, user, { returnOriginal: false });
         console.log(`${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,);
         // =================================================================
+
 
 
         // ======== update user's profile in profiles collection =========
@@ -39,16 +38,12 @@ const userUpdate = async (req: Request, res: Response, next: NextFunction ) => {
         // =================================================================
 
 
-        // ************ IMPORTANT ************
-        // update req.app.locals.currentUser
-        req.app.locals.currentUser = {
-            _id: req.app.locals.currentUser._id,
-            email: req.app.locals.currentUser.email,
-            name: req.body.name,
-            username: req.body.username,
-            password: req.app.locals.currentUser.password
-        };
-        // ***********************************
+        const userObj = {
+            _id: result.value._id,
+            email: result.value.email,
+            name: result.value.name,
+            username: result.value.username,
+        }
 
 
         res.send({ 

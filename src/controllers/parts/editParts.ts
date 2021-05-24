@@ -3,22 +3,16 @@ const { ObjectID } = require('mongodb');
 
 const editParts = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const userId = req.app.locals.currentUser._id;
         const bikeId = req.params.id;
         const parts = req.body.parts;
         const collection = req.app.locals.db.collection('bikes');
-
-        console.log(parts)
 
         if(parts.length === 0) {
             res.status(400).send({ message: 'At least one component needs to be added'}); 
             return
         }
 
-        const filter = { 
-            _id: ObjectID(bikeId),
-            user_id: userId,
-        };
+        const filter = { _id: ObjectID(bikeId) };
         
         const updateDoc = { 
             $set: { 

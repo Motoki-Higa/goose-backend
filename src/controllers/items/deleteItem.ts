@@ -5,10 +5,9 @@ const { ObjectID } = require('mongodb');
 
 const deleteItem = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const currentUserId = req.app.locals.currentUser._id;
         const itemId = req.params.id;
         const collection = req.app.locals.db.collection('items');
-        const item = await collection.findOne({user_id: currentUserId, _id: ObjectID(itemId)});
+        const item = await collection.findOne({_id: ObjectID(itemId)});
         const imageKeys = item.images.map((image: { key: string; }) => { 
             return { 'Key': image.key } 
         });
@@ -16,7 +15,7 @@ const deleteItem = async (req: Request, res: Response, next: NextFunction) => {
         // console.log(imageKeys);
 
         // ===== Take care of deleting an item from database ======
-        const itemToDelete = collection.deleteOne({user_id: currentUserId, _id: ObjectID(itemId)});
+        const itemToDelete = collection.deleteOne({_id: ObjectID(itemId)});
         // ==============================================================
 
         // ===== Take care of deleting a file(such as image) from aws s3 ======

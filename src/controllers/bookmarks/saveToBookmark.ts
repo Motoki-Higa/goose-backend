@@ -1,8 +1,9 @@
 import {Request, Response, NextFunction} from 'express';
+const { ObjectID } = require('mongodb');
 
 const saveToBookmark = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const userId = req.app.locals.currentUser._id;
+        const userId = req.params.userId;
         const bikeId = req.params.id;
         const collection = req.app.locals.db.collection('bookmarks');
         const bookmarkObj = await collection.findOne({user_id: userId});
@@ -13,7 +14,7 @@ const saveToBookmark = async (req: Request, res: Response, next: NextFunction) =
         otherwise, add to existing object.
         */
         if (bookmarkObj){
-            const filter = { user_id: userId };
+            const filter = { user_id: ObjectID(userId) };
             const updateDoc = { 
                 $addToSet: { 
                     bike_ids: bikeId 

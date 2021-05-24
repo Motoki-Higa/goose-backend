@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+const { ObjectID } = require('mongodb');
 
 const postBike = async (req: Request, res: Response, next: NextFunction ) => {
     try {
@@ -11,7 +12,7 @@ const postBike = async (req: Request, res: Response, next: NextFunction ) => {
         })
 
         const bikeObj = {
-            user_id: req.app.locals.currentUser._id,
+            user_id: ObjectID(req.params.userId),
             name: req.body.name,
             brand: req.body.brand,
             builtby: req.body.builtby,

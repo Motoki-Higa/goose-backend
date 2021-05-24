@@ -5,7 +5,6 @@ const { ObjectID } = require('mongodb');
 
 const deleteSingleBikeImage = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const currentUserId = req.app.locals.currentUser._id;
         const bikeId = req.params.id;
         const imageKey = req.body.key;
         const collection = req.app.locals.db.collection('bikes');
@@ -13,7 +12,7 @@ const deleteSingleBikeImage = async (req: Request, res: Response, next: NextFunc
 
         // ======== Take care of deleting an image from database =========
         // create a filter for a bike to update
-        const filter = { _id: ObjectID(bikeId), user_id: currentUserId };
+        const filter = { _id: ObjectID(bikeId) };
         // create a document that unsets the selected image
         const updateDoc = {
             $pull: { images: { key: imageKey } },

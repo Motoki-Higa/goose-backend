@@ -5,9 +5,9 @@ const sendEmail = require('./../../utils/sendEmail');
 
 const emailChangeToken = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { newEmail } = req.body;
+        const { oldEmail, newEmail } = req.body;
         const newEmailObj = { email: newEmail };
-        const userEmail = req.app.locals.currentUser.email;
+        const userEmail = oldEmail;
         const token = await generateToken(newEmailObj, process.env.EMAIL_CHANGE_TOKEN_SECRET); // this token expires in 10 min
 
         // below two variables are sent to updataOne() function

@@ -3,15 +3,10 @@ const { ObjectID } = require('mongodb');
 
 const deleteParts = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const userId = req.app.locals.currentUser._id;
         const bikeId = req.params.id;
-        const parts = req.body.parts;
         const collection = req.app.locals.db.collection('bikes');
 
-        const filter = { 
-            _id: ObjectID(bikeId),
-            user_id: userId,
-        };
+        const filter = { _id: ObjectID(bikeId) };
         
         const updateDoc = { 
             $unset: { 

@@ -1,12 +1,13 @@
 import {Request, Response, NextFunction} from 'express';
+const { ObjectID } = require('mongodb');
 
 const removeFromBookmark = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const userId = req.app.locals.currentUser._id;
+        const userId = req.params.userId;
         const bikeId = req.params.id;
         const collection = req.app.locals.db.collection('bookmarks');
 
-        const filter = { user_id: userId };
+        const filter = { user_id: ObjectID(userId) };
         const updateDoc = { 
             $pull: { 
                 bike_ids: bikeId  

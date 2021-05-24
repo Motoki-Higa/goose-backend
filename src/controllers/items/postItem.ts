@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+const { ObjectID } = require('mongodb');
 
 const postItem = async (req: Request, res: Response, next: NextFunction ) => {
     try {
@@ -7,15 +8,11 @@ const postItem = async (req: Request, res: Response, next: NextFunction ) => {
         // * (images as any) solves the issue of gettting 'expression is not callable' on map()
         const images = req.files;
         const imagesData = (images as any).map( (image: any) => {
-            // console.log(image.transforms);
             return {'key': image.transforms[0].key, 'location': image.transforms[0].location};
         })
 
-        // console.log(req.files);
-
         const itemObj = {
-            user_id: req.app.locals.currentUser._id,
-            username: req.app.locals.currentUser.username,
+            user_id: ObjectID(req.params.userId),
             name: req.body.name,
             brand: req.body.brand,
             desc: req.body.desc,

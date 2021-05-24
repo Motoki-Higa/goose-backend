@@ -85,7 +85,7 @@ router.put('/users/password/reset/:token', passwordResetTokenAuthenticate, passw
 
 
 // account PUT (to edit)
-router.put('/users/:id', userEditValidator, userUpdate);
+router.put('/users/:username', userEditValidator, userUpdate);
 // account DELETE
 router.delete('/users/:id', authenticateUser, userDelete);
 // Email change request
@@ -105,7 +105,7 @@ router.get('/feed/:id', feedSingleBike);
 
 
 // bikes POST
-router.post('/bikes', imageUploadBike, postBike);
+router.post('/:userId/bikes', imageUploadBike, postBike);
 // bikes DELETE
 router.delete('/bikes/:id', deleteBike);
 // bikes/:id/edit POST (to update)
@@ -133,7 +133,7 @@ router.delete('/bikes/:id/parts', deleteParts);
 
 
 // items POST
-router.post('/items', imageUploadItem, postItem);
+router.post('/:userId/items', imageUploadItem, postItem);
 // items/:id DELETE
 router.delete('/items/:id', deleteItem);
 // items/:id/edit POST (to update)
@@ -149,9 +149,9 @@ router.get('/:userId/items/:id', getSingleItem);
 
 
 // save to bookmark POST
-router.post('/bookmark/bikes/:id', saveToBookmark);
+router.post('/:userId/bookmark/bikes/:id', saveToBookmark);
 // remove from bookmark DELETE
-router.delete('/bookmark/bikes/:id', removeFromBookmark);
+router.delete('/:userId/bookmark/bikes/:id', removeFromBookmark);
 // get bookmarks by user_id
 router.get('/:userId/bookmark', getBookmark);
 // get all bookmark(bikes)
@@ -160,14 +160,14 @@ router.post('/:userId/bookmark/bikes', getSavedBikes);
 router.post('/:userId/bookmark/bikes/search', bookmarkSearch('bikes'));
 
 
-// get all following users
-router.get('/following', getFollowing);
 // get all bookmark(bikes)
 router.post('/following', getAllFollowingUsers);
+// get all following users
+router.get('/:userId/following', getFollowing);
 // follow
-router.post('/following/:id', follow);
+router.post('/:userId/following/:id', follow);
 // unfollow
-router.delete('/following/:id', unFollow);
+router.delete('/:userId/following/:id', unFollow);
 
 
 // profile POST
