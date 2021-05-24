@@ -37,7 +37,7 @@ const imageUploadItem = (req: Request, res: Response, next: NextFunction) => {
                 cb(null, Date.now().toString() + file.originalname);
             },
             transform: function (req: any, file: any, cb: any) {
-                cb(null, sharp().resize(900))
+                cb(null, sharp().rotate().resize(900))
             }
         }]
     });
