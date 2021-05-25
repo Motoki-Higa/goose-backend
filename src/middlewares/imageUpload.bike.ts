@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import aws from 'aws-sdk';
 import multer from 'multer'; // middleware for handling multipart/form-data
 import sharp from 'sharp'; // convert large images
+import path from 'path';
 const multerS3 = require ('multer-s3-transform'); // Streaming multer storage engine for AWS S3
 
 
@@ -14,10 +15,17 @@ const imageUploadBike = (req: Request, res: Response, next: NextFunction) => {
     });
 
     const fileFilter = (req: any, file: any, cb: any) => {
-        if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
-        cb(null, true); // true = store image
+        // Allowed ext
+        const filetypes = /jpeg|jpg|png|webp/;
+        // Check ext
+        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+        // Check mime
+        const mimetype = filetypes.test(file.mimetype);
+
+        if (mimetype && extname) {
+            cb(null, true); // true = store image
         } else {
-        cb(new Error("Invalid file type, only JPEG and PNG is allowed"), false);
+            cb(new Error("Invalid file type, only JPEG, PNG and WEBP are allowed"), false);
         }
     };
 
@@ -47,7 +55,7 @@ const imageUploadBike = (req: Request, res: Response, next: NextFunction) => {
         storage: multerS3Config,
         fileFilter: fileFilter,
         limits: {
-            fileSize: 1024 * 1024 * 5 // we are allowing only 5 MB files
+            fileSize: 1024 * 1024 * 10 // we are allowing only 5 MB files
         }
     }).array('image', 5)
 
