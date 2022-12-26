@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 const emailChange = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const token = req.params.token;
-        const newEmail = req.app.locals.newEmail;
+        const newEmail = req.newEmail;
         const collection = await req.app.locals.db.collection('users');
         const filter = { emailChangeToken: token };
         const user = await collection.findOne(filter);

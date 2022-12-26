@@ -22,9 +22,9 @@ const authenticateUser = async (req: Request, res: Response, next: NextFunction)
             if (authenticated) {
 
                 if (user.status === 'verified'){
-                    
+
                     // Store the user on the Request object.
-                    req.app.locals.currentUser = user;
+                    req.currentUser = user;
                     console.log(`Authentication successful for email: ${user.email}`);
 
                 } else {
