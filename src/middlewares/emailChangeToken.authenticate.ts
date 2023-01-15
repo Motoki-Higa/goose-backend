@@ -15,7 +15,7 @@ function emailChangeTokenAuthenticate(req: Request, res: Response, next: NextFun
             return res.status(403).send({ error: "The verification link is expired" });
         }
         console.log(user.email);
-        req.app.locals.newEmail = user.email;
+        req.newEmail = user.email;
         next();
     });
 }
